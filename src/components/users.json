@@ -1,0 +1,14 @@
+{"users": {
+    "Jan": {
+        "first_name" : "Jan",
+        "last_name" : "Zon",
+        "nickname": "Jazon",
+        "password": "1234567890"
+    },
+    "Test": {
+        "first_name" : "Test",
+        "last_name" : "Test",
+        "nickname": "Test",
+        "password": "Test"
+    }
+}}  
