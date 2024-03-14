@@ -7,7 +7,7 @@
     position: absolute;
     background-size: cover;
     background-position: 50% 50%;
-    background-image: url("../views/assets/arrowback.png");
+    background-image: url("../assets/arrowback.png");
     height: 60px;
     width: 60px;
     top:8px;
