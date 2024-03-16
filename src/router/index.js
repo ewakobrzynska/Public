@@ -6,7 +6,6 @@ const routes = [
     path: '/',
     name: 'home',
     component: () => import('../views/HomeView.vue'),
-    meta: {requiresAuth: true},
   },
   {
     path: '/register',
@@ -22,19 +21,16 @@ const routes = [
     path: '/page1',
     name: 'page1',
     component: () => import('../views/Page1View.vue'),
-    meta: {requiresAuth: true},
   },
   {
     path: '/page2',
     name: 'page2',
     component: () => import('../views/Page2View.vue'),
-    meta: {requiresAuth: true},
   },
   {
     path: '/page3',
     name: 'page3',
     component: () => import('../views/Page3View.vue'),
-    meta: {requiresAuth: true},
   },
   {
     path: '/settings',
