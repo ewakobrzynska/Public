@@ -2,8 +2,8 @@
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
-import { retriveUserData }  from '../database.js'
-import { myData }  from '../database.js'
+import { retriveUserData }  from '../../data/database.js'
+import { myData }  from '../../data/database.js'
 import arrowback from '../components/ArrowBack.vue'
 
 export default {

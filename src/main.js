@@ -4,7 +4,6 @@ import router from './router'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import { initializeApp } from "firebase/app";
-import store from './store'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDbjr_tJOAcE85rptZoh13ySNKs2F4uOcw",
@@ -20,7 +19,7 @@ initializeApp(firebaseConfig);
 
 loadFonts()
 createApp(App)
-  .use(router).use(vuetify).use(store)
+  .use(router).use(vuetify)
   .mount('#app')
 
 

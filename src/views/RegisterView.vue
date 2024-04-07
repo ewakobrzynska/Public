@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from 'vue-router'
-import { writeUserData }  from '../database.js'
+import { writeUserData }  from '../../data/database.js'
 
 const firstname = ref("");
 const lastname = ref("");
