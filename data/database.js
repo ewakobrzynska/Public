@@ -1,6 +1,15 @@
 import { getDatabase, ref, set, /*update*/ onValue } from "firebase/database";
+import * as roomsFile from "./rooms.json";
+import * as detailsFile from "./details.json";
+import * as scheduleFile from "./schedule.json";
 
 const db = getDatabase();
+
+function importDataFromFiles() {
+  set(ref(db, 'rooms'), roomsFile);
+  set(ref(db, 'details'), detailsFile);
+  set(ref(db, 'schedule'), scheduleFile);
+}
 
 export function writeUserData(userId, email, firstname, lastname){
   const reference = ref(db, 'users/' + userId);
@@ -21,6 +30,7 @@ export function writeUserData(userId, email, firstname, lastname){
 // }
 
 var data = {}
+importDataFromFiles()
 
 export function retriveUserData(userId){
   const distanceRef = ref(db, 'users/' + userId);

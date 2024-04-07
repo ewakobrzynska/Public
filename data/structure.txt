@@ -1,0 +1,27 @@
+    Field name              Type        Example
+
+Room {
+    roomNumber              string      A-0-11
+    detailsUrl              string      https://www.usosweb.uj.edu.pl/kontroler.php?_action=katalog2/sale2/szczegoly&sala_id=3172
+    numberOfPlaces          int         18
+}
+
+Detail {
+    roomNumber              string      A-0-11
+    zone                    string      III Kampus
+    street                  string      prof. Stanisława Łojasiewicza
+    building                string      III Kampus, budynek Wydziału Fizyki, Astronomii i Informatyki Stosowanej
+    organizationalUnit      string      Wydział Fizyki, Astronomii i Informatyki Stosowanej
+    numberOfPlaces          int         18
+    scheduleUrl             string      https://www.usosweb.uj.edu.pl/kontroler.php?_action=katalog2/jednostki/pokazSale&sala_id=3172
+    phoneNumberForBookings  string      126644854
+}
+
+Schedule {
+    roomNumber              string      A-0-11
+    date                    string      2024-04-03
+    start                   string      10:00
+    finish                  string      11:30
+    name                    string      Język angielski - C1 - 60 godzin/2 semestr
+    person                  string      Jolanta Rutkowska
+}
