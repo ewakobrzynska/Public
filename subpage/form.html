@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta http-euiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System rezerwacji</title>
+    <link rel="stylesheet" href="form.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!--------------MENU----------->
+<nav>
+    <div class="container nav_container">
+        <a href="index.html"><h4>SYSTEM REZERWACJI</h4></a>
+        <ol class="nav_menu">
+            <li><a class="btn-admin" href=".html">Zaloguj jako administrator</a></li>
+        </ol>
+    </div>
+</nav>
+
+<!-------------FORM-------------->
+<section class="form">
+    <div class="container form_container">
+        <aside class="aside_image">
+            <div class="aside_image">
+                <img src="https://www.svgrepo.com/show/415380/online-exam-test.svg">
+            </div>
+            <h2>Dokończ rezerwacje wypełniając formularz.</h2>
+        </aside>
+
+        <form class="res_form">
+            <div class="form_name">
+                <input type="text" name="Imię" placeholder="Imię" required>
+                <input type="text" name="Nazwisko" placeholder="Nazwisko" required>
+                <input type="email" name="E-mail" placeholder="E-mail" required>
+            </div>
+            <input type="room" name="Pokój" placeholder="" required>
+            <input type="time" name="Czas" placeholder="" required>
+            <button type="button" class="btn btn-reserve">Rezerwuj</button>
+        </form>
+    </div>
+</section>
+
+<!------------STOPKA-------------->
+<footer class="footer">
+    <div class="container footer_container">
+        <div class="footer_location">
+            <p>Lokalizacja:</p>
+            <p>ul. Stanisława Łojasiewicza 11, 00-000 Kraków</p>
+        </div>
+        <div class="footer_contact">
+            <p>Informacje kontaktowe:</p>
+            <p>Email: kontakt@systemrezerwacji.pl</p>
+            <p>Telefon: 123 456 789</p>
+        </div>
+    </div>
+</footer>
+  
+
+</body>
+</html>
