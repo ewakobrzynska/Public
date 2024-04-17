@@ -1,101 +1,94 @@
+
 <template>
-  <v-container fluid class="container-padding">
-        <v-row class="pa-0 ma-0">
-          <v-col lg="6" md="6" sm="6" cols="12" class="pa-0 ma-0">
-            <router-link to="page1" class="pa-0 ma-0">
-              <div class="field1"><div class="text-center">1</div></div>
-            </router-link>
-          </v-col>
-          <v-col lg="6" md="6" sm="6" cols="12" class="pa-0 ma-0">
-            <router-link to="page2" class="pa-0 ma-0">
-              <div class="field2"><div class="text-center">2</div></div>
-            </router-link>
-          </v-col>
-          <v-col lg="6" md="6" sm="6" cols="12" class="pa-0 ma-0">
-            <router-link to="page3" class="pa-0 ma-0">
-              <div class="field3"><div class="text-center">3</div></div>
-            </router-link>
-          </v-col>
-          <v-col lg="6" md="6" sm="6" cols="12"  class="pa-0 ma-0">
-            <router-link to="settings" class="pa-0 ma-0">
-             <div class="field4"><div class="text-center">4</div></div>
-            </router-link>
-          </v-col>
-        </v-row>
-      </v-container>
+  <div id="app">
+    <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+      <div class="container d-flex justify-content-between">
+        <h1>System Rezerwacji</h1>
+        <button @click="loginAsAdmin" class="btn btn-primary btn-sm">Zaloguj jako Administrator</button>
+      </div>
+    </div>
+
+    <div class="container py-5">
+      <!-- Pole formularza do filtrowania -->
+      <div class="row mb-3">
+        <div class="col">
+          <input type="number" v-model="filterCapacity" class="form-control" placeholder="Filtruj po ilości miejsc...">
+        </div>
+      </div>
+
+      <!-- Tabela z salami -->
+      <div class="row">
+        <div class="col">
+          <h2 class="mb-3">Dostępne sale</h2>
+          <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col">Numer sali</th>
+              <th scope="col">Pojemność</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="room in filteredRooms" :key="room.name">
+              <td>{{ room.name }}</td>
+              <td>{{ room.capacity }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Sekcja lokalizacji i informacji -->
+      <div class="row mt-5">
+        <div class="col-md-6">
+          <h3>Lokalizacja</h3>
+          <p>ul. Stanisława Łojasiewicza 11, 00-000 Kraków</p>
+          <p><strong>Godziny otwarcia:</strong> Pon - Pt: 8:00 - 20:00</p>
+        </div>
+        <div class="col-md-6">
+          <h3>Informacje kontaktowe</h3>
+          <p>Email: kontakt@systemrezerwacji.pl</p>
+          <p>Telefon: 123 456 789</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-export default({
-  name : 'HomePage',
-  data(){
+export default {
+  name: 'App',
+  data() {
     return {
-    };
+      rooms: [
+        { name: 'A-0-11', capacity: 18 },
+        { name: 'A-0-13', capacity: 33 },
+        { name: 'A-0-15', capacity: 24 }
+      ],
+      filterCapacity: ''
+    }
+  },
+  computed: {
+    filteredRooms() {
+      return this.filterCapacity ? this.rooms.filter(room => room.capacity >= this.filterCapacity) : this.rooms;
+    }
+  },
+  methods: {
+    loginAsAdmin() {
+      window.location.href = '/login';
+    }
   }
-  
-});
-
+}
 </script>
 
-<style scoped>
-.text-center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    font-size: 40px;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
+<style>
+@import '@/css/bootstrap.min.css';
+
+.d-flex {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e3e4e6;
 }
-.container-padding{
-  margin-top: 0px;
-  padding-top: 8px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-bottom: 0px;
+
+h1 {
+  color: #333;
 }
-@media screen and (max-width: 600px) {
-  .container-padding{
-    padding-top: 0px;
-  }
-}
-.field1, .field2, .field3, .field4{
-  transition-duration: 0.4s;
-  color: white;
-  border-radius: 20px;
-  background-size: cover;
-  background-position: 50% 50%;
-  border: 7px solid white;
-  min-height: 49vh;
-  max-height: 50%;
-  position: relative;
-}
-.field1{
-  background-color: orange;
-}
-.field2{
-  background-color: green;
-}
-.field3{
-  background-color: blue;
-}
-.field4{
-  background-color: red;
-}
-.field1:hover, .field2:hover, .field3:hover, .field4:hover {
-  transform: scale(1.02);
-}
-a:link, a:visited, a:hover, a:active {
-  text-decoration: none;
-}
-@media screen and (max-width: 600px) {
-  .field1, .field3{
-    margin-left: 0px;
-  }
-}
-@media screen and (max-width: 600px) {
-  .field2, .field4{
-    margin-right: 0px;
-  }
-}
+
 </style>
