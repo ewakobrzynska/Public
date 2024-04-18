@@ -18,24 +18,9 @@ const routes = [
     component: () => import('../views/LoginView.vue'),
   },
   {
-    path: '/page1',
-    name: 'page1',
-    component: () => import('../views/Page1View.vue'),
-  },
-  {
-    path: '/page2',
-    name: 'page2',
-    component: () => import('../views/Page2View.vue'),
-  },
-  {
-    path: '/page3',
-    name: 'page3',
-    component: () => import('../views/Page3View.vue'),
-  },
-  {
-    path: '/settings',
-    name: 'settings',
-    component: () => import('../views/SettingsView.vue'),
+    path: '/adminpanel',
+    name: 'adminpanel',
+    component: () => import('../views/AdminPanelView.vue'),
     meta: {requiresAuth: true},
   },
 ]

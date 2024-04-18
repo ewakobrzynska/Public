@@ -1,10 +1,13 @@
-
 <template>
   <div id="app">
     <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
       <div class="container d-flex justify-content-between">
         <h1>System Rezerwacji</h1>
-        <button @click="loginAsAdmin" class="btn btn-primary btn-sm">Zaloguj jako Administrator</button>
+        <div>
+          <router-link to="adminpanel" class="pa-0 ma-0">
+            <button class="btn btn-primary btn-sm">Panel Administratora</button>
+          </router-link>
+        </div>
       </div>
     </div>
 
@@ -71,11 +74,6 @@ export default {
       return this.filterCapacity ? this.rooms.filter(room => room.capacity >= this.filterCapacity) : this.rooms;
     }
   },
-  methods: {
-    loginAsAdmin() {
-      window.location.href = '/login';
-    }
-  }
 }
 </script>
 
