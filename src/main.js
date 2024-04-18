@@ -5,10 +5,12 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import { initializeApp } from "firebase/app";
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyDbjr_tJOAcE85rptZoh13ySNKs2F4uOcw",
   authDomain: "rezerwacja-9c6a5.firebaseapp.com",
   projectId: "rezerwacja-9c6a5",
+  databaseURL: "https://rezerwacja-9c6a5-default-rtdb.firebaseio.com",
   storageBucket: "rezerwacja-9c6a5.appspot.com",
   messagingSenderId: "277624196973",
   appId: "1:277624196973:web:cbbdbff86145ccd20c1464",
