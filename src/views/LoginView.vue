@@ -56,7 +56,7 @@ const login = () =>{
 
 </script>
 
-<style>
+<style scoped>
 :root {
   --red: #cc0000;
   --green: #09a716;
