@@ -1,7 +1,7 @@
-import { getDatabase, ref, set, /*update*/ onValue } from "firebase/database";
-import * as roomsFile from "./rooms.json";
-import * as detailsFile from "./details.json";
-import * as scheduleFile from "./schedule.json";
+import { getDatabase, ref, set, onValue } from "firebase/database";
+import roomsFile from "./rooms.json";
+import detailsFile from "./details.json";
+import scheduleFile from "./schedule.json";
 
 const db = getDatabase();
 
@@ -20,14 +20,6 @@ export function writeUserData(userId, email, firstname, lastname){
     email : email,
   });
 }
-
-// export function writeUserScore(userId, numbersScore){
-//     const reference = ref(db, 'users/' + userId);
-  
-//     update(reference, {
-//       score: score,
-//     });
-// }
 
 var data = {}
 importDataFromFiles()
