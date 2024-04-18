@@ -52,7 +52,9 @@ export default {
       <v-col cols="12">
         <h1 class="title mb-3">System rejestracji</h1>
         <v-btn class="mx-3 button">Sale</v-btn>
-        <v-btn class="mx-3 button">Rezerwacje</v-btn>
+        <router-link to="reservation" class="pa-0 ma-0">
+          <v-btn class="mx-3 button">Rezerwacje</v-btn>
+        </router-link>
         <v-btn class="mx-3 button">Dane i Konflikty</v-btn>
         <v-btn @click="handleSignOut" v-if="isLoggedIn" class="logout_button">Wyloguj</v-btn>
       </v-col>

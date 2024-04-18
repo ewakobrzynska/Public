@@ -23,6 +23,12 @@ const routes = [
     component: () => import('../views/AdminPanelView.vue'),
     meta: {requiresAuth: true},
   },
+  {
+    path: '/reservation',
+    name: 'reservation',
+    component: () => import('../views/ReservationView.vue'),
+    meta: {requiresAuth: true},
+  },
 ]
 
 const router = createRouter({
