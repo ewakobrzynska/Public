@@ -2,12 +2,12 @@
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
-import { retriveUserData }  from '../../data/database.js'
-import { myData }  from '../../data/database.js'
+import { retriveUserData }  from '../database.js'
+import { myData }  from '../database.js'
 import arrowback from '../components/ArrowBack.vue'
 
 export default {
-  name: 'SettingsView',
+  name: 'AdminPanelView',
   components: {
     arrowback
   },
@@ -46,27 +46,44 @@ export default {
 </script>
 
 <template>
-  <v-container fluid class="pa-0 ma-0" style="background-color:#c2c2c2;height:100%">
+  <v-container fluid class="pa-0 ma-0" style="background-color: #c5c5c5; height: 100vh; display: flex; align-items: center; justify-content: center;">
     <router-link to="/" class="pa-0 ma-0"><arrowback /></router-link>
-      <v-row class="text-center pa-0 ma-0">
-        <nav style="justify-content:center; margin: 0 auto;">
-          <button @click="handleSignOut" v-if="isLoggedIn">Kliknij aby się wylogować</button>
-        </nav>
-      </v-row>
+    <v-row align="center" justify="center" class="text-center">
+      <v-col cols="12">
+        <h1 class="title mb-3">System rejestracji</h1>
+        <v-btn class="mx-3 button">Sale</v-btn>
+        <v-btn class="mx-3 button">Rezerwacje</v-btn>
+        <v-btn class="mx-3 button">Dane i Konflikty</v-btn>
+        <v-btn @click="handleSignOut" v-if="isLoggedIn" class="logout_button">Wyloguj</v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <style>
-.logout_button{
-    margin-top: 10px;
-    margin-left: 5px;
-    width: 100px;
-    background-color: #ffffff;
-    color: #080710;
-    padding: 15px 0;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
+.logout_button {
+  margin-left: 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  background-color: #888484;
+  color: white;
+  padding-top: 5px;
+}
+
+.button {
+  font-size: 18px;
+  border-radius: 5px;
+  background-color: #e08609;
+  padding-top: 5px;
+}
+
+v-btn:hover {
+  background-color: #000000;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #333333;
 }
 </style>
