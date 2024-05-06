@@ -7,6 +7,12 @@
           <router-link to="adminpanel" class="pa-0 ma-0">
             <button class="btn btn-primary btn-sm">Panel Administratora</button>
           </router-link>
+          <router-link to="classroom" class="pa-0 ma-0">
+            <button class="btn btn-primary btn-sm">Sale</button>
+          </router-link>
+          <router-link to="reservations" class="pa-0 ma-0">
+            <button class="btn btn-primary btn-sm">Rezerwacje</button>
+          </router-link>
         </div>
       </div>
     </div>

@@ -39,15 +39,16 @@ export function myData(data){
 
 
 //Przykladowa funkcja do uzyskania sali o indeksie 11
-export function retrieveRoomData(roomIndex){
-  const roomRef = ref(db, `rooms/${roomIndex}`);
-  onValue(roomRef, (snapshot) => {
-    const roomData = snapshot.val();
-    console.log(roomData);
+export function retrieveRoomData(roomIndex) {
+  return new Promise((resolve, reject) => {
+    const roomRef = ref(db, `details/${roomIndex}`);
+    onValue(roomRef, (snapshot) => {
+      const roomData = snapshot.val();
+      resolve(roomData);
+    }, (error) => {
+      reject(error);
+    });
   });
 }
 
-retrieveRoomData(11);
-
-//Jezeli chcecie uzyc powyzsej metody z dowolnego miejsca kodu to wystarczy ja zaimportowac wklejajac kod ponizej
-//import { retrieveRoomData } from "./nazwaTwojegoModulu";
+//retrieveRoomData(11);

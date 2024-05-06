@@ -29,6 +29,16 @@ const routes = [
     component: () => import('../views/ReservationView.vue'),
     meta: {requiresAuth: true},
   },
+  {
+    path: '/reservations',
+    name: 'reservations',
+    component: () => import('../views/ReservationsView.vue'),
+  },
+  {
+    path: '/classroom',
+    name: 'classroom',
+    component: () => import('../views/ClassroomView.vue'),
+  }
 ]
 
 const router = createRouter({
