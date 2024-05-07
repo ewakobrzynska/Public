@@ -21,7 +21,7 @@ export function writeUserData(userId, email, firstname, lastname){
   });
 }
 
-var data = {}
+let data = {};
 importDataFromFiles()
 
 export function retriveUserData(userId){
@@ -52,3 +52,15 @@ export function retrieveRoomData(roomIndex) {
 }
 
 //retrieveRoomData(11);
+
+export function getAllReservations() {
+  return new Promise((resolve, reject) => {
+    const scheduleRef = ref(db, 'schedule');
+    onValue(scheduleRef, (snapshot) => {
+      const scheduleData = snapshot.val();
+      resolve(scheduleData);
+    }, (error) => {
+      reject(error);
+    });
+  })
+}
