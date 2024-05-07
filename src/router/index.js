@@ -38,6 +38,12 @@ const routes = [
     path: '/classroom',
     name: 'classroom',
     component: () => import('../views/ClassroomView.vue'),
+  },
+  {
+    path: '/reservations-history',
+    name: 'reservations-history',
+    component: () => import('../views/ReservationsHistoryView.vue'),
+    meta: {requiresAuth: true},
   }
 ]
 

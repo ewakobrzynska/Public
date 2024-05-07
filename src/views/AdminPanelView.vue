@@ -55,6 +55,9 @@ export default {
         <router-link to="reservation" class="pa-0 ma-0">
           <v-btn class="mx-3 button">Rezerwacje</v-btn>
         </router-link>
+        <router-link to="reservations-history" class="pa-0 ma-0">
+          <v-btn class="mx-3 button">Historia Rezerwacji</v-btn>
+        </router-link>
         <v-btn class="mx-3 button">Dane i Konflikty</v-btn>
         <v-btn @click="handleSignOut" v-if="isLoggedIn" class="logout_button">Wyloguj</v-btn>
       </v-col>
