@@ -1,6 +1,11 @@
 <template>
   <div>
     <h1>Katalog Sal</h1>
+      <div class="row mb-3">
+        <div class="col">
+          <input type="number" v-model="filterCapacity" class="form-control" placeholder="Filtruj po ilości miejsc...">
+        </div>
+      </div>
     <table class="classroom-table">
       <thead>
         <tr>
@@ -14,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(room, index) in rooms" :key="index">
+        <tr v-for="(room, index) in filteredRooms" :key="index">
           <td>{{ room.zone }}</td>
           <td>{{ room.street }}</td>
           <td>{{ room.building }}</td>
@@ -35,8 +40,15 @@ export default {
   name: 'ClassroomView',
   data() {
     return {
-      rooms: [],  
+      rooms: [],
+      filterCapacity: ''  
     };
+    
+  },
+  computed: {
+    filteredRooms() {
+      return this.filterCapacity ? this.rooms.filter(room => room.numberOfPlaces >= this.filterCapacity) : this.rooms;
+    }
   },
   async mounted() {
     try {
