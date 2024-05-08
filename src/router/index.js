@@ -46,7 +46,7 @@ const routes = [
     meta: {requiresAuth: true},
   },
   {
-    path: '/calendar',
+    path: '/calendar/:roomNumber',
     name: 'calendar',
     component: () => import('../views/calendar/CalendarView.vue'),
   },

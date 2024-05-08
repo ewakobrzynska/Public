@@ -137,7 +137,9 @@ export default {
 
     async mounted() {
         try {
-            const events = getEvents("A-0-11");
+            const roomNumber = this.$route.params.roomNumber;
+
+            const events = getEvents(roomNumber);
             
             if (events instanceof Promise) {
                 const resolvedEvents = await events;
@@ -157,7 +159,7 @@ export default {
 <template>
     <div class="demo-app">
         <header>
-            <h2>Plan zajęć odbywających się w sali A-0-11</h2>
+            <h2>Plan zajęć odbywających się w sali {{ $route.params.roomNumber }}</h2>
             <h3>III Kampus, budynek Wydziału Fizyki, Astronomii i Informatyki Stosowanej (Loj11)</h3>
         </header>
 
