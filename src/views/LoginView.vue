@@ -6,7 +6,6 @@
             <input type="text" placeholder="Adres email" v-model="email" id="email">
             <label for="password">Hasło</label>
             <input type="password" placeholder="hasło" v-model="password" id="password">
-            <button class="notregistered" @click="toRegister">Nie masz konta? Zarejestruj się</button>
             <button class="login" @click="login">Zaloguj</button>
         </form>
     </div> 
@@ -21,10 +20,6 @@ const email = ref("");
 const password = ref("");
 const router = useRouter();
 const errMsg = ref();
-
-const toRegister = () =>{
-    router.push('/register');
-}
 
 const login = () =>{
     const auth = getAuth();
@@ -57,40 +52,18 @@ const login = () =>{
 </script>
 
 <style scoped>
-:root {
-  --red: #cc0000;
-  --green: #09a716;
-  --blue: #366799;
-  --orange: #f1ab12;
-  --gray: #313131;
-  --gray2: #383838;
-  --darkgray: #383838;
-  --background: #282828;
-  --bluenav: #44c7ef;
-  --bluebordernav: #29b0d9;
-}
-*,
-*:before,
-*:after{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-.background{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: #e08609;
-}
+@import '@/css/bootstrap.min.css';
+
 form{
     height: 470px;
     width: 400px;
     max-width: 400px;
-    background-color: #cc7906;
+    background-color: #dee2e6;
     position: absolute;
     transform: translate(-50%,-50%);
     top: 50%;
     left: 50%;
+    color: black;
     border-radius: 10px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
@@ -122,20 +95,31 @@ label{
     font-size: 16px;
     font-weight: 500;
 }
-input{
+form h3,
+label {
+    color: black;
+}
+input::placeholder {
+
+    color: black; 
+    color: rgba(255, 255, 255, 0.7);
+}
+
+input {
     display: block;
     height: 50px;
     width: 100%;
-    background-color: rgba(255,255,255,0.07);
+    background-color: rgba(255, 255, 255, 0.07);
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 8px;
     font-size: 14px;
     font-weight: 300;
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    color: black; 
 }
-::placeholder{
-    color: #e5e5e5;
-}
+
+
 .login{
     margin-top: 20px;
     width: 100%;
@@ -147,13 +131,5 @@ input{
     border-radius: 5px;
     cursor: pointer;
 }
-.notregistered{
-    margin-top: 10px;
-    width: 100%;
-    color: #080710;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 5px;
-    cursor: pointer;
-}
+
 </style>
