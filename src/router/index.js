@@ -44,7 +44,12 @@ const routes = [
     name: 'reservations-history',
     component: () => import('../views/ReservationsHistoryView.vue'),
     meta: {requiresAuth: true},
-  }
+  },
+  {
+    path: '/calendar',
+    name: 'calendar',
+    component: () => import('../views/calendar/CalendarView.vue'),
+  },
 ]
 
 const router = createRouter({
