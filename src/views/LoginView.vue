@@ -9,7 +9,7 @@
             <button class="notregistered" @click="toRegister">Nie masz konta? Zarejestruj się</button>
             <button class="login" @click="login">Zaloguj</button>
         </form>
-    </div> 
+    </div>
 </template>
 
 <script setup>
