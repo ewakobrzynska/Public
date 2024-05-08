@@ -52,9 +52,6 @@ export default {
       <v-col cols="12">
         <h1 class="title mb-3">System rejestracji</h1>
         <v-btn class="mx-3 button">Sale</v-btn>
-        <router-link to="reservation" class="pa-0 ma-0">
-          <v-btn class="mx-3 button">Rezerwacje</v-btn>
-        </router-link>
         <router-link to="reservations-history" class="pa-0 ma-0">
           <v-btn class="mx-3 button">Historia Rezerwacji</v-btn>
         </router-link>
