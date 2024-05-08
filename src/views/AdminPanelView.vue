@@ -77,6 +77,7 @@ export default {
   border-radius: 5px;
   background-color: #888484;
   padding-top: 5px;
+  color: white;
 }
 
 v-btn:hover {
