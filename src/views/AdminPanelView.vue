@@ -4,13 +4,10 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
 import { retriveUserData }  from '../../data/database.js'
 import { myData }  from '../../data/database.js'
-import arrowback from '../components/ArrowBack.vue'
 
 export default {
   name: 'AdminPanelView',
-  components: {
-    arrowback
-  },
+  
   setup(){
     const auth = getAuth();
     const router = useRouter();
@@ -46,23 +43,56 @@ export default {
 </script>
 
 <template>
-  <v-container fluid class="pa-0 ma-0" style="background-color: #c5c5c5; height: 100vh; display: flex; align-items: center; justify-content: center;">
-    <router-link to="/" class="pa-0 ma-0"><arrowback /></router-link>
-    <v-row align="center" justify="center" class="text-center">
-      <v-col cols="12">
-        <h1 class="title mb-3">System rejestracji</h1>
-        <v-btn class="mx-3 button">Sale</v-btn>
-        <router-link to="reservations-history" class="pa-0 ma-0">
-          <v-btn class="mx-3 button">Historia Rezerwacji</v-btn>
-        </router-link>
-        <v-btn class="mx-3 button">Dane i Konflikty</v-btn>
-        <v-btn @click="handleSignOut" v-if="isLoggedIn" class="logout_button">Wyloguj</v-btn>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div id="app">
+    <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+        <div class="container d-flex justify-content-between">
+          <h1 v-if="isHomePage">System Rezerwacji</h1>
+          <h1 v-else>Panel Administratora</h1>
+          <div>
+            <router-link to="adminpanel" class="pa-0 ma-0">
+              <v-btn @click="handleSignOut" v-if="isLoggedIn" class="logout_button">Wyloguj</v-btn>
+            </router-link>
+          </div>
+        </div>
+    </div>
+  </div>
+
+<!-- Menu -->
+    <v-container fluid class="pa-0 ma-0" style="background-color: #c5c5c5;">
+      <v-row align="center" justify="center" class="text-center">
+        <v-col cols="12">
+          <router-link to="classroom" class="pa-0 ma-0 mr-3">
+            <v-btn class="mx-3 button">Sale</v-btn>
+          </router-link>
+          <router-link to="reservations-history" class="pa-0 ma-0">
+            <v-btn class="mx-3 button">Historia Rezerwacji</v-btn>
+          </router-link>
+          <v-btn class="mx-3 button">Dane i Konflikty</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+
+  <!-- Footer -->
+    <footer class="bg-light py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Lokalizacja</h3>
+            <p>ul. Stanisława Łojasiewicza 11, 00-000 Kraków</p>
+            <p><strong>Godziny otwarcia:</strong> Pon - Pt: 8:00 - 20:00</p>
+          </div>
+          <div class="col-md-6">
+            <h3>Informacje kontaktowe</h3>
+            <p>Email: kontakt@systemrezerwacji.pl</p>
+            <p>Telefon: 123 456 789</p>
+          </div>
+        </div>
+      </div>
+    </footer>
 </template>
 
 <style>
+@import '@/css/bootstrap.min.css';
 .logout_button {
   margin-left: 20px;
   font-size: 18px;
