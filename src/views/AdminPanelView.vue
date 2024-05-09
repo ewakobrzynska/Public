@@ -57,17 +57,17 @@ export default {
     </div>
     
     <!-- Menu -->
-    <div class="container d-flex justify-content-center">
-      <v-container fluid class="pa-0 ma-0" style="background-color: #c5c5c5;">
+    <div class="container d-flex justify-content-center" style="background-color: #dee2e6;">
+      <v-container fluid class="pa-0 ma-0">
         <v-row align="center" justify="center" class="text-center">
           <v-col cols="12">
-            <router-link to="classroom" class="pa-0 ma-0 mr-3">
-              <v-btn class="mx-3 button">Sale</v-btn>
+            <router-link to="classroom" class="pa-0 ma-0">
+              <v-btn class="mx-1 button">Sale</v-btn>
             </router-link>
             <router-link to="reservations-history" class="pa-0 ma-0">
-              <v-btn class="mx-3 button">Historia Rezerwacji</v-btn>
+              <v-btn class="mx-1 button">Historia Rezerwacji</v-btn>
             </router-link>
-            <v-btn class="mx-3 button">Dane i Konflikty</v-btn>
+            <v-btn class="mx-1 button">Dane i Konflikty</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -95,6 +95,13 @@ export default {
 
 <style>
 @import '@/css/bootstrap.min.css';
+
+v-col, .v-col-12{
+  padding: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  background: white;
+}
 .logout_button {
   margin-left: 20px;
   font-size: 18px;
@@ -120,5 +127,10 @@ v-btn:hover {
   font-size: 2.5rem;
   margin-bottom: 2rem;
   color: #333333;
+}
+
+.container {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 </style>
