@@ -55,24 +55,25 @@ export default {
           </div>
         </div>
     </div>
-  </div>
+    
+    <!-- Menu -->
+    <div class="container d-flex justify-content-center">
+      <v-container fluid class="pa-0 ma-0" style="background-color: #c5c5c5;">
+        <v-row align="center" justify="center" class="text-center">
+          <v-col cols="12">
+            <router-link to="classroom" class="pa-0 ma-0 mr-3">
+              <v-btn class="mx-3 button">Sale</v-btn>
+            </router-link>
+            <router-link to="reservations-history" class="pa-0 ma-0">
+              <v-btn class="mx-3 button">Historia Rezerwacji</v-btn>
+            </router-link>
+            <v-btn class="mx-3 button">Dane i Konflikty</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
 
-<!-- Menu -->
-    <v-container fluid class="pa-0 ma-0" style="background-color: #c5c5c5;">
-      <v-row align="center" justify="center" class="text-center">
-        <v-col cols="12">
-          <router-link to="classroom" class="pa-0 ma-0 mr-3">
-            <v-btn class="mx-3 button">Sale</v-btn>
-          </router-link>
-          <router-link to="reservations-history" class="pa-0 ma-0">
-            <v-btn class="mx-3 button">Historia Rezerwacji</v-btn>
-          </router-link>
-          <v-btn class="mx-3 button">Dane i Konflikty</v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-
-  <!-- Footer -->
+    <!-- Footer -->
     <footer class="bg-light py-4">
       <div class="container">
         <div class="row">
@@ -89,6 +90,7 @@ export default {
         </div>
       </div>
     </footer>
+  </div>
 </template>
 
 <style>

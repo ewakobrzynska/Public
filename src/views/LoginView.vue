@@ -28,7 +28,7 @@ const login = () =>{
             console.log("Successfully signed in");
             console.log(data);
             console.log(auth.currentUser);
-            router.push('/')
+            router.push('/adminpanel')
         })
         .catch((error) => {
             console.log(error.code);
