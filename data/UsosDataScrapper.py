@@ -5,11 +5,11 @@ import json
 
 origin = "www.usosweb.uj.edu.pl"
 connection = http.client.HTTPSConnection(origin)
-until = "2024-04-30"  # do którego dnia mają być pobrane dane
+until = "2024-06-30"  # do którego dnia mają być pobrane dane
 untilDate = datetime.strptime(until, "%Y-%m-%d")
-print("-----------------------")
+print("----------------------")
 print("> USOS DATA SCRAPPER < ")
-print("-----------------------\n")
+print("----------------------\n")
 print("Scrapping info about rooms schedule until: " + until)
 
 
@@ -31,7 +31,9 @@ for tr in roomsTable:
     data = {
         "roomNumber": a.getText(),
         "detailsUrl": a.get("href"),
-        "numberOfPlaces": int(tr.find("td", {"align": True}).getText())
+        "numberOfPlaces": int(tr.find("td", {"align": True}).getText()),
+        "computers": False,
+        "description": ""
     }
     rooms.append(data)
 print("[1/6] DONE")
@@ -94,7 +96,8 @@ for detail in details:
                     "start": hours[0],
                     "finish": hours[1],
                     "name": entry.get("name"),
-                    "person": entry.find_all("a")[1].getText()
+                    "person": entry.find_all("a")[1].getText(),
+                    "status": "IMPORTED"
                 }
                 schedule.append(data)
         date = date + timedelta(days=7)

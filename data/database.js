@@ -64,3 +64,27 @@ export function getAllReservations() {
     });
   })
 }
+
+export function getHistoryReservations() {
+  return new Promise((resolve, reject) => {
+    const scheduleRef = ref(db, 'schedule');
+    onValue(scheduleRef, (snapshot) => {
+      const scheduleData = snapshot.val();
+      const filteredData = Object.keys(scheduleData)
+        .filter(key => scheduleData[key].status !== "IMPORTED" && isPastDate(scheduleData[key].date))
+        .reduce((obj, key) => {
+          obj[key] = scheduleData[key];
+          return obj;
+        }, {});
+      resolve(filteredData);
+    }, (error) => {
+      reject(error);
+    });
+  })
+}
+
+function isPastDate(dateString) {
+  const currentDate = new Date();
+  const date = new Date(dateString);
+  return date < currentDate;
+}
