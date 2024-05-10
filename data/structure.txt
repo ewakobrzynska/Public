@@ -4,6 +4,8 @@ Room {
     roomNumber              string      A-0-11
     detailsUrl              string      https://www.usosweb.uj.edu.pl/kontroler.php?_action=katalog2/sale2/szczegoly&sala_id=3172
     numberOfPlaces          int         18
+    computers               boolean     false
+    description             string      sala wyposażona w projektor i 20 stanowisk komputerowych
 }
 
 Detail {
@@ -24,4 +26,5 @@ Schedule {
     finish                  string      11:30
     name                    string      Język angielski - C1 - 60 godzin/2 semestr
     person                  string      Jolanta Rutkowska
+    status                  string      IMPORTED (możliwe wartości: PENDING, CONFLICTED, ACCEPTED, REJECTED, IMPORTED)
 }

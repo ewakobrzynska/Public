@@ -30,7 +30,26 @@
         </tr>
       </tbody>
     </table>
+    <!-- Footer -->
+    <footer class="bg-light py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Lokalizacja</h3>
+            <p>ul. Stanisława Łojasiewicza 11, 00-000 Kraków</p>
+            <p><strong>Godziny otwarcia:</strong> Pon - Pt: 8:00 - 20:00</p>
+          </div>
+          <div class="col-md-6">
+            <h3>Informacje kontaktowe</h3>
+            <p>Email: kontakt@systemrezerwacji.pl</p>
+            <p>Telefon: 123 456 789</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
+
+
 </template>
 
 <script>

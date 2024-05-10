@@ -2,7 +2,7 @@
 import arrowback from "@/components/ArrowBack.vue";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {onMounted, ref} from "vue";
-import {myData, getAllReservations, retriveUserData} from "../../data/database";
+import {myData, getHistoryReservations, retriveUserData} from "../../data/database";
 
 export default {
   name: 'ReservationsHistoryView',
@@ -35,7 +35,7 @@ export default {
   },
   async mounted() {
     try {
-      this.reservations = await getAllReservations();
+      this.reservations = await getHistoryReservations();
     } catch (error) {
       console.error("Error while retrieving data:", error);
     }
@@ -45,8 +45,8 @@ export default {
 </script>
 
 <template>
-  <div class="container" style="background-color: #c5c5c5; height: 80px; width: 100%">
-    <router-link to="/adminpanel" class="pa-0 ma-0"><arrowback /></router-link>
+  <div class="header-container">
+    <router-link to="/adminpanel" class="pa-0 ma-0"><arrowback/></router-link>
   </div>
   <div class="table-container">
     <h1 style="margin-bottom: 20px">Historia rezerwacji</h1>
@@ -71,12 +71,36 @@ export default {
       </tbody>
     </table>
   </div>
+  <!-- Footer -->
+    <footer class="bg-light py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Lokalizacja</h3>
+            <p>ul. Stanisława Łojasiewicza 11, 00-000 Kraków</p>
+            <p><strong>Godziny otwarcia:</strong> Pon - Pt: 8:00 - 20:00</p>
+          </div>
+          <div class="col-md-6">
+            <h3>Informacje kontaktowe</h3>
+            <p>Email: kontakt@systemrezerwacji.pl</p>
+            <p>Telefon: 123 456 789</p>
+          </div>
+        </div>
+      </div>
+    </footer>
 </template>
 
 <style scoped>
+.header-container {
+  position: relative;
+  background-color: #c5c5c5;
+  height: 80px;
+  width: 100%;
+}
+
 .table-container {
   margin: 30px auto 30px auto;
-  width: 80%
+  width: 80%;
 }
 
 .reservations-history-table {

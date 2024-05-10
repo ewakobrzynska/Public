@@ -8,7 +8,9 @@
             <input type="password" placeholder="hasło" v-model="password" id="password">
             <button class="login" @click="login">Zaloguj</button>
         </form>
+        
     </div>
+    
 </template>
 
 <script setup>
