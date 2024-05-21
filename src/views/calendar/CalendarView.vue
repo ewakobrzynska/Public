@@ -102,11 +102,6 @@ export default {
             console.log(this.parentState)
         },
 
-        // handleClosingDialog(data) {
-        //     this.parentState = data
-        //     console.log(this.parentState)
-        // },
-
         handleSubmition(args) {
             console.log(args)
             this.formData = args
@@ -116,11 +111,8 @@ export default {
 
         loadEvents(events) {
             const numberOfEvents = events.length
-
-            // console.log(events[0])
             
             const calendarApi = this.$refs.calendarRef.getApi();
-            // let calendarApi = events[0].view.calendar
 
             for (let i = 0; i < numberOfEvents; i++) {
                 const title = `${events[i].title} - ${events[i].person}`;
@@ -157,7 +149,7 @@ export default {
 
 
 <template>
-    <div class="demo-app">
+    <div class="header">
         <header>
             <h2>Plan zajęć odbywających się w sali {{ $route.params.roomNumber }}</h2>
             <h3>III Kampus, budynek Wydziału Fizyki, Astronomii i Informatyki Stosowanej (Loj11)</h3>
@@ -167,7 +159,6 @@ export default {
             <FullCalendar :options="calendarOptions" ref="calendarRef"/>
         </div>
 
-        <!-- <button @click="updateDialogState">Update State</button> -->
         <DialogModal :childProp="parentState" v-on:changeDialogValue="updateDialogState" v-on:form-submitted="handleSubmition"/>
         
     </div>
@@ -184,32 +175,16 @@ export default {
         margin: 0 auto;
     }
 
-    ul {
-        margin: 0;
-        padding: 0 0 0 1.5em;
-    }
-
-    li {
-        margin: 1.5em 0;
-        padding: 0;
-    }
-
     b {
         margin-right: 3px;
     }
 
-    .demo-app {
+    .header {
         min-height: 100%;
         font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    /* font-size: 14px; */
     }
 
-    .demo-app-main {
-        flex-grow: 1;
-        padding: 3em;
-    }
-
-    .fc { /* the calendar root */
+    .fc {
         max-width: 1100px;
         margin: 0 auto;
     }

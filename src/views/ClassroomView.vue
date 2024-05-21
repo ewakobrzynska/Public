@@ -24,7 +24,8 @@
           <td>{{ room.street }}</td>
           <td>{{ room.building }}</td>
           <td>{{ room.organizationalUnit }}</td>
-          <td><router-link :to="{ name: 'calendar', params: { roomNumber: room.roomNumber }}"> {{ room.roomNumber }}</router-link></td>
+          <!-- <td><router-link :to="{ name: 'calendar', params: { roomNumber: room.roomNumber }}"> {{ room.roomNumber }}</router-link></td> -->
+          <td><router-link :to="{ name: 'classroom-details', params: { roomNumber: index }}"> {{ room.roomNumber }}</router-link></td>
           <td>{{ room.numberOfPlaces }}</td>
           <td>{{ room.phoneNumberForBookings }}</td>
         </tr>

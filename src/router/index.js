@@ -41,6 +41,11 @@ const routes = [
     meta: {requiresAuth: true},
   },
   {
+    path: '/classroom-details/:roomNumber',
+    name: 'classroom-details',
+    component: () => import('../views/ClassroomDetails.vue'),
+  },
+  {
     path: '/calendar/:roomNumber',
     name: 'calendar',
     component: () => import('../views/calendar/CalendarView.vue'),
