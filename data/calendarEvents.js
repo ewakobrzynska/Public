@@ -1,6 +1,5 @@
 import { getAllReservations } from "./database";
 
-
 function transformReservations(reservations) {
     const newList = reservations.map(oldObject => {
         return {
