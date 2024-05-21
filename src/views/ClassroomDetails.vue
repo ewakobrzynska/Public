@@ -2,7 +2,6 @@
     <v-card
       class="mx-auto pt-4 text-left"
       max-width="844"
-      max-height="550"
     >
       
       <v-card-text>
@@ -168,6 +167,10 @@
 
     h1, h2 {
         padding: 0.4rem 0;
+    }
+
+    .ul-details {
+      line-height: 2.6rem !important;
     }
 
     hr {

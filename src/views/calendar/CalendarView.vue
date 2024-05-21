@@ -165,7 +165,7 @@ export default {
   
   </template>
 
-<style lang='css'>
+<style scoped>
 
     header {
         padding-bottom: 4rem;
