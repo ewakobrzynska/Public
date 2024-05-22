@@ -1,14 +1,11 @@
 <script>
-import arrowback from "@/components/ArrowBack.vue";
+
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {onMounted, ref} from "vue";
 import {myData, getHistoryReservations, retriveUserData} from "../../data/database";
 
 export default {
   name: 'ReservationsHistoryView',
-  components: {
-    arrowback
-  },
   data() {
     return {
       reservations: []
@@ -45,11 +42,14 @@ export default {
 </script>
 
 <template>
-  <div class="header-container">
-    <router-link to="/adminpanel" class="pa-0 ma-0"><arrowback/></router-link>
-  </div>
+<div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+        <div class="container d-flex justify-content-between">
+          <h1 v-if="isHomePage">System Rezerwacji</h1>
+          <h1 v-else>Historia rezerwacji</h1>
+        </div>
+    </div>
+
   <div class="table-container">
-    <h1 style="margin-bottom: 20px">Historia rezerwacji</h1>
     <table class="reservations-history-table">
       <thead>
       <tr>
@@ -91,6 +91,7 @@ export default {
 </template>
 
 <style scoped>
+@import '@/css/bootstrap.min.css';
 .header-container {
   position: relative;
   background-color: #c5c5c5;

@@ -1,11 +1,17 @@
 <template>
   <div>
-    <h1>Katalog Sal</h1>
-      <div class="row mb-3">
-        <div class="col">
-          <input type="number" v-model="filterCapacity" class="form-control" placeholder="Filtruj po ilości miejsc...">
+  <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+        <div class="container d-flex justify-content-between">
+          <h1 v-if="isHomePage">System Rezerwacji</h1>
+          <h1 v-else>Katalog sal</h1>
+          <div class="row mb-3">
+            <div class="col">
+              <input type="number" v-model="filterCapacity" class="form-control" placeholder="Filtruj po ilości miejsc...">
+            </div>
+          </div>
         </div>
-      </div>
+    </div>
+
     <table class="classroom-table">
       <thead>
         <tr>
@@ -85,10 +91,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+@import '@/css/bootstrap.min.css';
+
 .classroom-table {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
+  margin-bottom: 2rem;
+  margin-left: 4.5rem;
 }
 
 .classroom-table th,
@@ -109,4 +119,8 @@ export default {
 .classroom-table tr:hover {
   background-color: #ddd;
 }
+.form-control {
+    width: 110%;
+}
+
 </style>
