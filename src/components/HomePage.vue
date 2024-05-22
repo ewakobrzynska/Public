@@ -3,10 +3,9 @@
     <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
       <div class="container d-flex justify-content-between">
         <h1 v-if="isHomePage">System Rezerwacji</h1>
-        <h1 v-else>Panel Administratora</h1>
         <div>
           <router-link to="adminpanel" class="pa-0 ma-0">
-            <button class="btn btn-primary btn-sm">Panel Administratora</button>
+              <v-btn  class="logout_button">Panel administratora</v-btn>
           </router-link>
         </div>
       </div>

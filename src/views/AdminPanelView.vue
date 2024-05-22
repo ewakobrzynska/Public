@@ -68,7 +68,7 @@ export default {
           <h1 v-else>Panel Administratora</h1>
           <div>
             <router-link to="adminpanel" class="pa-0 ma-0">
-              <v-btn @click="handleSignOut" v-if="isLoggedIn" class="logout_button">Wyloguj</v-btn>
+              <v-btn @click="handleSignOut" v-if="isLoggedIn">Wyloguj</v-btn>
             </router-link>
           </div>
         </div>
