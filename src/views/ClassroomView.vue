@@ -1,43 +1,53 @@
 <template>
   <div>
-  <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
-        <div class="container d-flex justify-content-between">
-          <h1 v-if="isHomePage">System Rezerwacji</h1>
-          <h1 v-else>Katalog sal</h1>
-          <div class="row mb-3">
-            <div class="col">
-              <input type="number" v-model="filterCapacity" class="form-control" placeholder="Filtruj po ilości miejsc...">
-            </div>
+    <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+      <div class="container d-flex justify-content-between">
+        <h1 v-if="isHomePage">System Rezerwacji</h1>
+        <h1 v-else>Katalog sal</h1>
+        <div class="row mb-3">
+          <div class="col">
+            <input type="number" v-model="filterCapacity" class="form-control" placeholder="Filtruj po ilości miejsc...">
+          </div>
+          <div class="col">
+            <label>
+              <input type="checkbox" v-model="filterComputer">
+              Tylko sale komputerowe
+            </label>
           </div>
         </div>
+      </div>
     </div>
 
     <table class="classroom-table">
       <thead>
-        <tr>
-          <th>Strefa</th>
-          <th>Ulica</th>
-          <th>Budynek</th>
-          <th>Jednostka organizacyjna</th>
-          <th>Numer sali</th>
-          <th>Liczba miejsc</th>
-          <th>Numer telefonu do rezerwacji</th>
-        </tr>
+      <tr>
+        <th>Strefa</th>
+        <th>Ulica</th>
+        <th>Budynek</th>
+        <th>Jednostka organizacyjna</th>
+        <th>Numer sali</th>
+        <th>Liczba miejsc</th>
+        <th>Komputerowa</th>
+        <th>Numer telefonu do rezerwacji</th>
+      </tr>
       </thead>
       <tbody>
-        <tr v-for="(room, index) in filteredRooms" :key="index">
-          <td>{{ room.zone }}</td>
-          <td>{{ room.street }}</td>
-          <td>{{ room.building }}</td>
-          <td>{{ room.organizationalUnit }}</td>
-          <!-- <td><router-link :to="{ name: 'calendar', params: { roomNumber: room.roomNumber }}"> {{ room.roomNumber }}</router-link></td> -->
-          <td><router-link :to="{ name: 'classroom-details', params: { roomNumber: index }}"> {{ room.roomNumber }}</router-link></td>
-          <td>{{ room.numberOfPlaces }}</td>
-          <td>{{ room.phoneNumberForBookings }}</td>
-        </tr>
+      <tr v-for="(room, index) in filteredRooms" :key="index">
+        <td>{{ room.zone }}</td>
+        <td>{{ room.street }}</td>
+        <td>{{ room.building }}</td>
+        <td>{{ room.organizationalUnit }}</td>
+        <td><router-link :to="{ name: 'classroom-details', params: { roomNumber: index }}"> {{ room.roomNumber }}</router-link></td>
+        <td>{{ room.numberOfPlaces }}</td>
+        <td>{{ room.hasComputer ? 'Tak' : 'Nie' }}</td>
+        <td>{{ room.phoneNumberForBookings }}</td>
+      </tr>
+      <tr v-if="filteredRooms.length === 0">
+        <td colspan="8" class="text-center">Brak dostępnych sal spełniających kryteria.</td>
+      </tr>
       </tbody>
     </table>
-    
+
     <!-- Footer -->
     <footer class="bg-light py-4">
       <div class="container">
@@ -66,13 +76,23 @@ export default {
   data() {
     return {
       rooms: [],
-      filterCapacity: ''  
+      filterCapacity: '',
+      filterComputer: false
     };
-    
   },
   computed: {
     filteredRooms() {
-      return this.filterCapacity ? this.rooms.filter(room => room.numberOfPlaces >= this.filterCapacity) : this.rooms;
+      let filtered = this.rooms;
+
+      if (this.filterCapacity) {
+        filtered = filtered.filter(room => room.numberOfPlaces >= this.filterCapacity);
+      }
+
+      if (this.filterComputer) {
+        filtered = filtered.filter(room => room.hasComputer === true);
+      }
+
+      return filtered;
     }
   },
   async mounted() {
@@ -82,8 +102,16 @@ export default {
         roomDataPromises.push(retrieveRoomData(i));
       }
       const allRoomData = await Promise.all(roomDataPromises);
-      this.rooms = allRoomData;
-      console.log(allRoomData);
+      this.rooms = allRoomData.map(room => ({
+        zone: room.zone,
+        street: room.street,
+        building: room.building,
+        organizationalUnit: room.organizationalUnit,
+        roomNumber: room.roomNumber,
+        numberOfPlaces: room.numberOfPlaces,
+        phoneNumberForBookings: room.phoneNumberForBookings,
+        hasComputer: room.hasComputer // Dodajemy hasComputer do obiektu sali
+      }));
     } catch (error) {
       console.error("Błąd podczas pobierania danych z bazy:", error);
     }
@@ -119,8 +147,8 @@ export default {
 .classroom-table tr:hover {
   background-color: #ddd;
 }
-.form-control {
-    width: 110%;
-}
 
+.form-control {
+  width: 110%;
+}
 </style>
