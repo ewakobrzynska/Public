@@ -58,7 +58,7 @@
     <form @submit.prevent="submitForm">
       <div class="mb-3">
           <label for="description" class="form-label" >Opis</label>
-          <input type="text" class="form-control" id="description" v-model="description" required>
+          <input type="text" class="form-control" id="description" v-model="description">
         </div>
         <div class="mb-3">
           <label for="roomNumber" class="form-label">Numer sali</label>
@@ -66,7 +66,7 @@
         </div>
         <div class="mb-3">
           <label for="hasComputer" class="form-label">Wyposażenie w komputery</label>
-          <select class="form-select" id="hasComputer" v-model="hasComputer" required>
+          <select class="form-select" id="hasComputer" v-model="hasComputer">
             <option value="true">Tak</option>
             <option value="false">Nie</option>
           </select>

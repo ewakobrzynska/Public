@@ -8,6 +8,12 @@
             <div class="col">
               <input type="number" v-model="filterCapacity" class="form-control" placeholder="Filtruj po ilości miejsc...">
             </div>
+            <div class="col">
+            <label>
+              <input type="checkbox" v-model="filterComputer">
+              Tylko sale komputerowe
+            </label>
+          </div>
           </div>
         </div>
     </div>
@@ -21,20 +27,24 @@
           <th>Jednostka organizacyjna</th>
           <th>Numer sali</th>
           <th>Liczba miejsc</th>
+          <th>Komputerowa</th>
           <th>Numer telefonu do rezerwacji</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(room, index) in filteredRooms" :key="index">
-          <td>{{ room.zone }}</td>
-          <td>{{ room.street }}</td>
-          <td>{{ room.building }}</td>
-          <td>{{ room.organizationalUnit }}</td>
-          <!-- <td><router-link :to="{ name: 'calendar', params: { roomNumber: room.roomNumber }}"> {{ room.roomNumber }}</router-link></td> -->
-          <td><router-link :to="{ name: 'classroom-details-admin', params: { roomNumber: index }}"> {{ room.roomNumber }}</router-link></td>
-          <td>{{ room.numberOfPlaces }}</td>
-          <td>{{ room.phoneNumberForBookings }}</td>
-        </tr>
+      <tr v-for="(room, index) in filteredRooms" :key="index">
+        <td>{{ room.zone }}</td>
+        <td>{{ room.street }}</td>
+        <td>{{ room.building }}</td>
+        <td>{{ room.organizationalUnit }}</td>
+        <td><router-link :to="{ name: 'classroom-details-admin', params: { roomNumber: index }}"> {{ room.roomNumber }}</router-link></td>
+        <td>{{ room.numberOfPlaces }}</td>
+        <td>{{ room.hasComputer ? 'Tak' : 'Nie' }}</td>
+        <td>{{ room.phoneNumberForBookings }}</td>
+      </tr>
+      <tr v-if="filteredRooms.length === 0">
+        <td colspan="8" class="text-center">Brak dostępnych sal spełniających kryteria.</td>
+      </tr>
       </tbody>
     </table>
     
@@ -66,13 +76,24 @@ export default {
   data() {
     return {
       rooms: [],
-      filterCapacity: ''  
+      filterCapacity: '',
+      filterComputer: false
     };
     
   },
   computed: {
     filteredRooms() {
-      return this.filterCapacity ? this.rooms.filter(room => room.numberOfPlaces >= this.filterCapacity) : this.rooms;
+      let filtered = this.rooms;
+
+      if (this.filterCapacity) {
+        filtered = filtered.filter(room => room.numberOfPlaces >= this.filterCapacity);
+      }
+
+      if (this.filterComputer) {
+        filtered = filtered.filter(room => room.hasComputer === true);
+      }
+
+      return filtered;
     }
   },
   async mounted() {
@@ -82,7 +103,16 @@ export default {
         roomDataPromises.push(retrieveRoomData(i));
       }
       const allRoomData = await Promise.all(roomDataPromises);
-      this.rooms = allRoomData;
+      this.rooms = allRoomData.map(room => ({
+        zone: room.zone,
+        street: room.street,
+        building: room.building,
+        organizationalUnit: room.organizationalUnit,
+        roomNumber: room.roomNumber,
+        numberOfPlaces: room.numberOfPlaces,
+        phoneNumberForBookings: room.phoneNumberForBookings,
+        hasComputer: room.hasComputer // Dodajemy hasComputer do obiektu sali
+      }));
       console.log(allRoomData);
     } catch (error) {
       console.error("Błąd podczas pobierania danych z bazy:", error);

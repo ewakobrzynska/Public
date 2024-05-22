@@ -201,18 +201,18 @@ form {
   position: absolute; 
   bottom: -2rem; 
   background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.1); 
+  background: rgba(0, 0, 0, 0); 
   color: #f1f1f1; 
   width: 100%;
   transition: .5s ease;
-  opacity:0.2;
+  opacity:0.4;
   color: white;
   font-size: 20px;
   padding: 20px;
   text-align: center;
 }
 .column:hover .overlay {
-  opacity: 0.5;
+  opacity: 0.9;
 }
 
 .image {
