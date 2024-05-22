@@ -13,21 +13,19 @@
     </div>
 
     <div class="container py-5" v-if="isHomePage">
-      <p v-if="isHomePage">Witaj w systemie rezerwacji sal! Znajdziesz tutaj dostępne sale oraz możliwość dokonywania rezerwacji.</p>
+      
       <!-- Przyciski do przekierowań -->
-      <div class="row mt-5">
-        <div class="col-md-6 offset-md-3 text-center">
-          <p v-if="isHomePage">Dostępne sale znajdziesz tutaj:</p>
-          <router-link to="classroom" class="pa-0 ma-0 mr-3">
-            <button class="btn btn-primary btn-lg">Sale</button>
-          </router-link>
+      <div class="row">
+        <div class="column">
+              <p v-if="isHomePage">Witaj w systemie rezerwacji sal!<br> Tutaj możesz przeglądać i rezerwować sale do różnych celów edukacyjnych i spotkań. Nasza platforma jest prosta w obsłudze, zapewniając szybkie i wygodne dokonywanie rezerwacji online.<br><br> Dziękujemy za korzystanie z naszego systemu!</p>
         </div>
-        <div class="col-md-6 offset-md-3 text-center">
-          <p></p>
-          <p v-if="isHomePage">Wykonane rezerwacje:</p>
-          <router-link to="reservations" class="pa-0 ma-0">
-            <button class="btn btn-primary btn-lg">Rezerwacje</button>
-          </router-link>
+        <div class="column">
+          <img src="https://img.freepik.com/premium-vector/lesson-pupils-icon-element-education-icon-vector-illustration-eps-10-stock-image_797523-2038.jpg" class="image">
+          <div class="overlay">
+            <router-link to="classroom" class="pa-0 ma-0">
+                <v-btn>Sale</v-btn>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -74,6 +72,41 @@ export default {
 
 h1 {
   color: #333;
+}
+
+.column {
+  float: left;
+  padding: 5px;
+  position: relative;
+  width: 80%;
+  max-width: 500px;
+  align: center;
+}
+
+.row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 5rem;
+}
+
+.overlay {
+  position: absolute; 
+  bottom: -2rem; 
+  color: #f1f1f1; 
+  width: 100%;
+  transition: .5s ease;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 </style>
