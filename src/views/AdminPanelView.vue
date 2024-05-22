@@ -95,7 +95,7 @@ export default {
       <div class="column">
         <img src="https://t3.ftcdn.net/jpg/04/57/16/48/360_F_457164865_FPfUR4Hi6RuNPa6sqITpYgkWQMw5pPv4.jpg" style="width:100%" class="image">
         <div class="overlay">
-          <router-link to="classroom" class="pa-0 ma-0">
+          <router-link to="" class="pa-0 ma-0">
                 <v-btn>Dane i konflikty</v-btn>
             </router-link>
         </div>
@@ -201,36 +201,37 @@ form {
   width: 50%;
   max-width: 350px;
   align: center;
-  border-style: ridge;
 }
 
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
+.row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5rem 0;
 }
 
 .overlay {
   position: absolute; 
-  bottom: 0; 
+  bottom: -2rem; 
   background: rgb(0, 0, 0);
   background: rgba(0, 0, 0, 0.1); 
   color: #f1f1f1; 
-  width: 290px;
+  width: 100%;
   transition: .5s ease;
-  opacity:0;
+  opacity:0.2;
   color: white;
   font-size: 20px;
   padding: 20px;
   text-align: center;
 }
 .column:hover .overlay {
-  opacity: 1;
+  opacity: 0.5;
 }
 
 .image {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 </style>
