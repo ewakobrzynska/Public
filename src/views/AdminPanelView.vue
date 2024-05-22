@@ -75,20 +75,31 @@ export default {
     </div>
     
     <!-- Menu -->
-    <div class="container d-flex justify-content-center" style="background-color: #dee2e6;">
-      <v-container fluid class="pa-0 ma-0">
-        <v-row align="center" justify="center" class="text-center">
-          <v-col cols="12">
-            <router-link to="classroom" class="pa-0 ma-0">
-              <v-btn class="mx-1 button">Sale</v-btn>
+    <div class="row">
+      <div class="column">
+        <img src="https://img.freepik.com/premium-vector/lesson-pupils-icon-element-education-icon-vector-illustration-eps-10-stock-image_797523-2038.jpg" class="image">
+        <div class="overlay">
+          <router-link to="classroom" class="pa-0 ma-0">
+              <v-btn>Sale</v-btn>
+          </router-link>
+        </div>
+      </div>
+      <div class="column">
+        <img src="https://i.pinimg.com/736x/ad/8c/6a/ad8c6ae2a9823de975790775d8dc9200.jpg"  style="width:100%" class="image">
+        <div class="overlay">
+          <router-link to="reservations-history" class="pa-0 ma-0">
+                <v-btn>Historia rezerwacji</v-btn>
             </router-link>
-            <router-link to="reservations-history" class="pa-0 ma-0">
-              <v-btn class="mx-1 button">Historia Rezerwacji</v-btn>
+        </div>
+      </div>
+      <div class="column">
+        <img src="https://t3.ftcdn.net/jpg/04/57/16/48/360_F_457164865_FPfUR4Hi6RuNPa6sqITpYgkWQMw5pPv4.jpg" style="width:100%" class="image">
+        <div class="overlay">
+          <router-link to="classroom" class="pa-0 ma-0">
+                <v-btn>Dane i konflikty</v-btn>
             </router-link>
-            <v-btn class="mx-1 button">Dane i Konflikty</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
+        </div>
+      </div>
     </div>
 
     <div class="container mt-4">
@@ -181,5 +192,45 @@ form {
 .btn-primary:hover {
   background-color: #000000;
   border-color: #000000;
+}
+
+.column {
+  float: left;
+  padding: 5px;
+  position: relative;
+  width: 50%;
+  max-width: 350px;
+  align: center;
+  border-style: ridge;
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.overlay {
+  position: absolute; 
+  bottom: 0; 
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.1); 
+  color: #f1f1f1; 
+  width: 290px;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.column:hover .overlay {
+  opacity: 1;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 </style>
