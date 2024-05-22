@@ -64,6 +64,13 @@
           <label for="roomNumber" class="form-label">Numer sali</label>
           <input type="text" class="form-control" id="roomNumber" v-model="roomNumber" required>
         </div>
+        <div class="mb-3">
+          <label for="hasComputer" class="form-label">Wyposażenie w komputery</label>
+          <select class="form-select" id="hasComputer" v-model="hasComputer" required>
+            <option value="true">Tak</option>
+            <option value="false">Nie</option>
+          </select>
+        </div>
       
           <v-card-actions class="form-actions"> 
             <div class="buttons">
