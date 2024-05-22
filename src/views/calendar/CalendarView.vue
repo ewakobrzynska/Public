@@ -149,20 +149,20 @@ export default {
 
 
 <template>
-<div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+    <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
         <div class="container d-flex justify-content-between">
           <h1 v-if="isHomePage">System Rezerwacji</h1>
-          <h2>Plan zajęć: sala {{ $route.params.roomNumber }} III Kampus, budynek Wydziału Fizyki, Astronomii i Informatyki Stosowanej (Loj11)</h2>
+          <h2>Plan zajęć: sala {{ $route.params.roomNumber }}<br> III Kampus, budynek Wydziału Fizyki, Astronomii i Informatyki Stosowanej (Loj11)</h2>
         </div>
     </div>
+
     <div class="header">
         <div>
             <FullCalendar :options="calendarOptions" ref="calendarRef"/>
         </div>
-
         <DialogModal :childProp="parentState" v-on:changeDialogValue="updateDialogState" v-on:form-submitted="handleSubmition"/>
-        
     </div>
+
   <!-- Footer -->
     <footer class="bg-light py-4">
       <div class="container">
@@ -183,8 +183,7 @@ export default {
   </template>
 
 <style scoped>
-@import '@/css/bootstrap.min.css';
-
+    @import '@/css/bootstrap.min.css';
 
     header {
         padding-bottom: 4rem;
@@ -199,7 +198,8 @@ export default {
     }
 
     .header {
-        min-height: 100%;
+        margin-top: 3rem;
+        min-height: 75%;
         font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     }
 

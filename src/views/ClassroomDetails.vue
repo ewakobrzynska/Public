@@ -2,7 +2,7 @@
 <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
         <div class="container d-flex justify-content-between">
           <h1 v-if="isHomePage">System Rezerwacji</h1>
-          <h1 v-else>Katalog sal</h1>
+          <h1 v-else>Katalog sal - szczegóły</h1>
         </div>
     </div>
     <v-card
