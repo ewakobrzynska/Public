@@ -63,10 +63,10 @@ watch(() => props.childProp, (newValue) => {
 const firstName = ref('');
 const lastName = ref('');
 const course = ref('');
-const roomNumber = ref('');
-const date = ref('');
-const start = ref('');
-const finish = ref('');
+//const roomNumber = ref('');
+//const date = ref('');
+//const start = ref('');
+//const finish = ref('');
 
 const submitForm = async () => {
   if (!firstName.value || !lastName.value || !course.value) {
@@ -80,12 +80,12 @@ const submitForm = async () => {
   console.log('Course:', course.value);
 
   const formData = {
-    date: date.value,
-    finish: finish.value,
+    //date: date.value,
+    //finish: finish.value,
     name: course.value,
     person: firstName.value + " " + lastName.value,
-    roomNumber: roomNumber.value,
-    start: start.value,
+    //roomNumber: roomNumber.value,
+    //start: start.value,
     status: 'IMPORTED'
     //timestamp: new Date().toISOString()
   };
