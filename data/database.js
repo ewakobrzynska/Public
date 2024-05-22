@@ -83,6 +83,18 @@ export function getHistoryReservations() {
   })
 }
 
+export function retrieveRoomDescription(roomNumber) {
+  return new Promise((resolve, reject) => {
+    const descriptionRef = ref(db, `opissal/${roomNumber}`);
+    onValue(descriptionRef, (snapshot) => {
+      const descriptionData = snapshot.val();
+      resolve(descriptionData ? descriptionData.description : null);
+    }, (error) => {
+      reject(error);
+    });
+  });
+}
+
 function isPastDate(dateString) {
   const currentDate = new Date();
   const date = new Date(dateString);
