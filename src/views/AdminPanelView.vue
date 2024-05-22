@@ -79,7 +79,7 @@ export default {
       <div class="column">
         <img src="https://img.freepik.com/premium-vector/lesson-pupils-icon-element-education-icon-vector-illustration-eps-10-stock-image_797523-2038.jpg" class="image">
         <div class="overlay">
-          <router-link to="classroom" class="pa-0 ma-0">
+          <router-link to="classroom-admin" class="pa-0 ma-0">
               <v-btn>Sale</v-btn>
           </router-link>
         </div>
@@ -100,20 +100,6 @@ export default {
             </router-link>
         </div>
       </div>
-    </div>
-
-    <div class="container mt-4">
-      <form @submit.prevent="submitForm">
-        <div class="mb-3">
-          <label for="description" class="form-label">Opis</label>
-          <input type="text" class="form-control" id="description" v-model="description" required>
-        </div>
-        <div class="mb-3">
-          <label for="roomNumber" class="form-label">Numer sali</label>
-          <input type="text" class="form-control" id="roomNumber" v-model="roomNumber" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Wyślij</button>
-      </form>
     </div>
 
     <!-- Footer -->

@@ -35,6 +35,11 @@ const routes = [
     component: () => import('../views/ClassroomView.vue'),
   },
   {
+    path: '/classroom-admin',
+    name: 'classroom-admin',
+    component: () => import('../views/ClassroomViewAdmin.vue'),
+  },
+  {
     path: '/reservations-history',
     name: 'reservations-history',
     component: () => import('../views/ReservationsHistoryView.vue'),
@@ -44,6 +49,11 @@ const routes = [
     path: '/classroom-details/:roomNumber',
     name: 'classroom-details',
     component: () => import('../views/ClassroomDetails.vue'),
+  },
+  {
+    path: '/classroom-details-admin/:roomNumber',
+    name: 'classroom-details-admin',
+    component: () => import('../views/ClassroomDetailsAdmin.vue'),
   },
   {
     path: '/calendar/:roomNumber',
