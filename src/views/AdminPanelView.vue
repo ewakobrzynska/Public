@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { getDatabase, ref as dbRef, set } from "firebase/database";
 import { retriveUserData }  from '../../data/database.js'
 import { myData }  from '../../data/database.js'
 
@@ -12,6 +13,8 @@ export default {
     const auth = getAuth();
     const router = useRouter();
     const isLoggedIn = ref(false);
+    const description = ref('');
+    const roomNumber = ref(null);
 
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
@@ -29,9 +32,24 @@ export default {
         });
     };
 
+    const submitForm = () => {
+      const db = getDatabase();
+      const dataRef = dbRef(db, 'opissal/' + roomNumber.value);
+      set(dataRef, {
+        description: description.value,
+        roomNumber: roomNumber.value,
+      });
+      alert('Dane zostały zapisane');
+      description.value = '';
+      roomNumber.value = null;
+    };
+
     return {
       isLoggedIn,
       handleSignOut,
+      description,
+      roomNumber,
+      submitForm,
     }
   },
   created() {   
@@ -71,6 +89,20 @@ export default {
           </v-col>
         </v-row>
       </v-container>
+    </div>
+
+    <div class="container mt-4">
+      <form @submit.prevent="submitForm">
+        <div class="mb-3">
+          <label for="description" class="form-label">Opis</label>
+          <input type="text" class="form-control" id="description" v-model="description" required>
+        </div>
+        <div class="mb-3">
+          <label for="roomNumber" class="form-label">Numer sali</label>
+          <input type="text" class="form-control" id="roomNumber" v-model="roomNumber" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Wyślij</button>
+      </form>
     </div>
 
     <!-- Footer -->
@@ -128,9 +160,26 @@ v-btn:hover {
   margin-bottom: 2rem;
   color: #333333;
 }
-
 .container {
   margin-top: 0px;
   margin-bottom: 0px;
+}
+form {
+  max-width: 500px;
+  margin: auto;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #888484;
+  border-color: #888484;
+}
+
+.btn-primary:hover {
+  background-color: #000000;
+  border-color: #000000;
 }
 </style>

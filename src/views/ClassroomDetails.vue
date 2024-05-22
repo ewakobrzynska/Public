@@ -24,6 +24,7 @@
             <li> <p><strong>Jednostka organizacyjna:</strong> {{ roomDetails.organizationalUnit }} </p></li>
             <li> <p><strong>Numer sali:</strong> {{ roomDetails.roomNumber }} </p></li>
             <li> <p><strong>Liczba miejsc:</strong> {{ roomDetails.numberOfPlaces }} </p></li>
+            <li> <p><strong>Opis sali:</strong> {{ roomDescription }}</p></li>
           </ul>
         </div>
       </v-card-text>
@@ -99,11 +100,12 @@
   </template>
   
   <script>
-    import { retrieveRoomData } from "../../data/database.js";
+    import { retrieveRoomData, retrieveRoomDescription } from "../../data/database.js";
 
     export default {
       data: () => ({
         roomDetails: {},
+        roomDescription: '',
         reveal: false,
       }),
 
@@ -124,6 +126,13 @@
 
           const data = await retrieveRoomData(roomNumber)
           this.roomDetails = data
+
+          if (this.roomDetails.roomNumber) {
+            const description = await retrieveRoomDescription(this.roomDetails.roomNumber);
+            this.roomDescription = description ? description : 'Brak opisu';
+          } else {
+            this.roomDescription = 'Brak numeru sali';
+          }
 
         } catch (error) {
           console.error('Error fetching room details:', error);
