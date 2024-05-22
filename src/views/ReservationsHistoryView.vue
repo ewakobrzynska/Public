@@ -100,8 +100,7 @@ export default {
 }
 
 .table-container {
-  margin: 30px auto 30px auto;
-  width: 80%;
+  margin: 40px 40px 40px 40px;
 }
 
 .reservations-history-table {

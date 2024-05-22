@@ -1,15 +1,18 @@
 <template>
+<div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+        <div class="container d-flex justify-content-between">
+          <h1 v-if="isHomePage">System Rezerwacji</h1>
+          <h1 v-else>Katalog sal</h1>
+        </div>
+    </div>
     <v-card
       class="mx-auto pt-4 text-left"
       max-width="844"
     >
-      
       <v-card-text>
         <div class="top">
               <v-btn size="35" icon="mdi-arrow-left" class="arr-btn" @click="goBack"></v-btn>
-
             <div class="header">
-                <p>Katalog sal</p>
                 <h1>Szczegóły sali</h1>
             </div>
         </div>
@@ -97,6 +100,24 @@
         </v-card>
       </v-expand-transition>
     </v-card>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Lokalizacja</h3>
+            <p>ul. Stanisława Łojasiewicza 11, 00-000 Kraków</p>
+            <p><strong>Godziny otwarcia:</strong> Pon - Pt: 8:00 - 20:00</p>
+          </div>
+          <div class="col-md-6">
+            <h3>Informacje kontaktowe</h3>
+            <p>Email: kontakt@systemrezerwacji.pl</p>
+            <p>Telefon: 123 456 789</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   </template>
   
   <script>
@@ -144,10 +165,10 @@
   
 
   <style scoped>
-
+@import '@/css/bootstrap.min.css';
     .text-left {
         text-align: left;
-        margin-top: 9rem !important;
+        margin-top: 9rem;
         background-color: rgba(245, 245, 245, 0.332);
     }
 

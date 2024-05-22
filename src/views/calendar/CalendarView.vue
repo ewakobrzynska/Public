@@ -149,12 +149,13 @@ export default {
 
 
 <template>
+<div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+        <div class="container d-flex justify-content-between">
+          <h1 v-if="isHomePage">System Rezerwacji</h1>
+          <h2>Plan zajęć: sala {{ $route.params.roomNumber }} III Kampus, budynek Wydziału Fizyki, Astronomii i Informatyki Stosowanej (Loj11)</h2>
+        </div>
+    </div>
     <div class="header">
-        <header>
-            <h2>Plan zajęć odbywających się w sali {{ $route.params.roomNumber }}</h2>
-            <h3>III Kampus, budynek Wydziału Fizyki, Astronomii i Informatyki Stosowanej (Loj11)</h3>
-        </header>
-
         <div>
             <FullCalendar :options="calendarOptions" ref="calendarRef"/>
         </div>
@@ -162,10 +163,28 @@ export default {
         <DialogModal :childProp="parentState" v-on:changeDialogValue="updateDialogState" v-on:form-submitted="handleSubmition"/>
         
     </div>
-  
+  <!-- Footer -->
+    <footer class="bg-light py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Lokalizacja</h3>
+            <p>ul. Stanisława Łojasiewicza 11, 00-000 Kraków</p>
+            <p><strong>Godziny otwarcia:</strong> Pon - Pt: 8:00 - 20:00</p>
+          </div>
+          <div class="col-md-6">
+            <h3>Informacje kontaktowe</h3>
+            <p>Email: kontakt@systemrezerwacji.pl</p>
+            <p>Telefon: 123 456 789</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   </template>
 
 <style scoped>
+@import '@/css/bootstrap.min.css';
+
 
     header {
         padding-bottom: 4rem;
