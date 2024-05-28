@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { getDatabase, ref as dbRef, set } from "firebase/database";
 import { retriveUserData }  from '../../data/database.js'
 import { myData }  from '../../data/database.js'
 
@@ -12,6 +13,8 @@ export default {
     const auth = getAuth();
     const router = useRouter();
     const isLoggedIn = ref(false);
+    const description = ref('');
+    const roomNumber = ref(null);
 
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
@@ -29,9 +32,24 @@ export default {
         });
     };
 
+    const submitForm = () => {
+      const db = getDatabase();
+      const dataRef = dbRef(db, 'opissal/' + roomNumber.value);
+      set(dataRef, {
+        description: description.value,
+        roomNumber: roomNumber.value,
+      });
+      alert('Dane zostały zapisane');
+      description.value = '';
+      roomNumber.value = null;
+    };
+
     return {
       isLoggedIn,
       handleSignOut,
+      description,
+      roomNumber,
+      submitForm,
     }
   },
   created() {   
@@ -50,27 +68,38 @@ export default {
           <h1 v-else>Panel Administratora</h1>
           <div>
             <router-link to="adminpanel" class="pa-0 ma-0">
-              <v-btn @click="handleSignOut" v-if="isLoggedIn" class="logout_button">Wyloguj</v-btn>
+              <v-btn @click="handleSignOut" v-if="isLoggedIn">Wyloguj</v-btn>
             </router-link>
           </div>
         </div>
     </div>
     
     <!-- Menu -->
-    <div class="container d-flex justify-content-center" style="background-color: #dee2e6;">
-      <v-container fluid class="pa-0 ma-0">
-        <v-row align="center" justify="center" class="text-center">
-          <v-col cols="12">
-            <router-link to="classroom" class="pa-0 ma-0">
-              <v-btn class="mx-1 button">Sale</v-btn>
+    <div class="row">
+      <div class="column">
+        <img src="https://img.freepik.com/premium-vector/lesson-pupils-icon-element-education-icon-vector-illustration-eps-10-stock-image_797523-2038.jpg" class="image">
+        <div class="overlay">
+          <router-link to="classroom-admin" class="pa-0 ma-0">
+              <v-btn>Sale</v-btn>
+          </router-link>
+        </div>
+      </div>
+      <div class="column">
+        <img src="https://i.pinimg.com/736x/ad/8c/6a/ad8c6ae2a9823de975790775d8dc9200.jpg"  style="width:100%" class="image">
+        <div class="overlay">
+          <router-link to="reservations-history" class="pa-0 ma-0">
+                <v-btn>Historia rezerwacji</v-btn>
             </router-link>
-            <router-link to="reservations-history" class="pa-0 ma-0">
-              <v-btn class="mx-1 button">Historia Rezerwacji</v-btn>
+        </div>
+      </div>
+      <div class="column">
+        <img src="https://t3.ftcdn.net/jpg/04/57/16/48/360_F_457164865_FPfUR4Hi6RuNPa6sqITpYgkWQMw5pPv4.jpg" style="width:100%" class="image">
+        <div class="overlay">
+          <router-link to="" class="pa-0 ma-0">
+                <v-btn>Dane i konflikty</v-btn>
             </router-link>
-            <v-btn class="mx-1 button">Dane i Konflikty</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
+        </div>
+      </div>
     </div>
 
     <!-- Footer -->
@@ -128,9 +157,67 @@ v-btn:hover {
   margin-bottom: 2rem;
   color: #333333;
 }
-
 .container {
   margin-top: 0px;
   margin-bottom: 0px;
+}
+form {
+  max-width: 500px;
+  margin: auto;
+}
+
+.form-label {
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #888484;
+  border-color: #888484;
+}
+
+.btn-primary:hover {
+  background-color: #000000;
+  border-color: #000000;
+}
+
+.column {
+  float: left;
+  padding: 5px;
+  position: relative;
+  width: 50%;
+  max-width: 350px;
+  align: center;
+}
+
+.row{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5rem 0;
+}
+
+.overlay {
+  position: absolute; 
+  bottom: -2rem; 
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0); 
+  color: #f1f1f1; 
+  width: 100%;
+  transition: .5s ease;
+  opacity:0.4;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.column:hover .overlay {
+  opacity: 0.9;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 </style>

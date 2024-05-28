@@ -1,35 +1,35 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
-      <div class="container d-flex justify-content-between">
-        <h1 v-if="isHomePage">System Rezerwacji</h1>
-        <h1 v-else>Katalog sal</h1>
-        <div class="row mb-3">
-          <div class="col">
-            <input type="number" v-model="filterCapacity" class="form-control" placeholder="Filtruj po ilości miejsc...">
-          </div>
-          <div class="col">
+  <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+        <div class="container d-flex justify-content-between">
+          <h1 v-if="isHomePage">System Rezerwacji</h1>
+          <h1 v-else>Katalog sal</h1>
+          <div class="row mb-3">
+            <div class="col">
+              <input type="number" v-model="filterCapacity" class="form-control" placeholder="Filtruj po ilości miejsc...">
+            </div>
+            <div class="col">
             <label>
               <input type="checkbox" v-model="filterComputer">
               Tylko sale komputerowe
             </label>
           </div>
+          </div>
         </div>
-      </div>
     </div>
 
     <table class="classroom-table">
       <thead>
-      <tr>
-        <th>Strefa</th>
-        <th>Ulica</th>
-        <th>Budynek</th>
-        <th>Jednostka organizacyjna</th>
-        <th>Numer sali</th>
-        <th>Liczba miejsc</th>
-        <th>Komputerowa</th>
-        <th>Numer telefonu do rezerwacji</th>
-      </tr>
+        <tr>
+          <th>Strefa</th>
+          <th>Ulica</th>
+          <th>Budynek</th>
+          <th>Jednostka organizacyjna</th>
+          <th>Numer sali</th>
+          <th>Liczba miejsc</th>
+          <th>Komputerowa</th>
+          <th>Numer telefonu do rezerwacji</th>
+        </tr>
       </thead>
       <tbody>
       <tr v-for="(room, index) in filteredRooms" :key="index">
@@ -37,7 +37,7 @@
         <td>{{ room.street }}</td>
         <td>{{ room.building }}</td>
         <td>{{ room.organizationalUnit }}</td>
-        <td><router-link :to="{ name: 'classroom-details', params: { roomNumber: index }}"> {{ room.roomNumber }}</router-link></td>
+        <td><router-link :to="{ name: 'classroom-details-admin', params: { roomNumber: index }}"> {{ room.roomNumber }}</router-link></td>
         <td>{{ room.numberOfPlaces }}</td>
         <td>{{ room.hasComputer ? 'Tak' : 'Nie' }}</td>
         <td>{{ room.phoneNumberForBookings }}</td>
@@ -47,7 +47,7 @@
       </tr>
       </tbody>
     </table>
-
+    
     <!-- Footer -->
     <footer class="bg-light py-4">
       <div class="container">
@@ -72,13 +72,14 @@
 import { retrieveRoomData } from "../../data/database.js";
 
 export default {
-  name: 'ClassroomView',
+  name: 'ClassroomViewAdmin',
   data() {
     return {
       rooms: [],
       filterCapacity: '',
       filterComputer: false
     };
+    
   },
   computed: {
     filteredRooms() {
@@ -112,6 +113,7 @@ export default {
         phoneNumberForBookings: room.phoneNumberForBookings,
         hasComputer: room.hasComputer // Dodajemy hasComputer do obiektu sali
       }));
+      console.log(allRoomData);
     } catch (error) {
       console.error("Błąd podczas pobierania danych z bazy:", error);
     }
@@ -147,8 +149,8 @@ export default {
 .classroom-table tr:hover {
   background-color: #ddd;
 }
-
 .form-control {
-  width: 110%;
+    width: 110%;
 }
+
 </style>

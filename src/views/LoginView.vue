@@ -79,14 +79,13 @@ form{
 }
 form *{
     font-family: 'Poppins',sans-serif;
-    color: #ffffff;
+    color: #888484;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
 }
 form h3{
     font-size: 32px;
-    font-weight: 500;
     line-height: 42px;
     text-align: center;
 }
@@ -95,16 +94,15 @@ label{
     display: block;
     margin-top: 30px;
     font-size: 16px;
+}
+
+form h3, label {
+    color: black;
     font-weight: 500;
 }
-form h3,
-label {
-    color: black;
-}
-input::placeholder {
 
+input::placeholder {
     color: black; 
-    color: rgba(255, 255, 255, 0.7);
 }
 
 input {
@@ -112,18 +110,18 @@ input {
     height: 50px;
     width: 100%;
     background-color: rgba(255, 255, 255, 0.07);
-    border-radius: 3px;
+    border-radius: 4px;
     padding: 0 10px;
     margin-top: 8px;
     font-size: 14px;
     font-weight: 300;
     border: 1px solid rgba(255, 255, 255, 0.3); 
     color: black; 
+    background: white;
 }
 
-
 .login{
-    margin-top: 20px;
+    margin-top: 60px;
     width: 100%;
     background-color: #ffffff;
     color: #080710;
@@ -132,6 +130,8 @@ input {
     font-weight: 600;
     border-radius: 5px;
     cursor: pointer;
+    box-shadow: 0 0 10px rgba(1,0,0,0.3);
+
 }
 
 </style>
