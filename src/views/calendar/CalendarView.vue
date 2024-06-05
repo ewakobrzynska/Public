@@ -18,7 +18,8 @@
   import interactionPlugin from '@fullcalendar/interaction'
   import DialogModal from './DialogModal.vue'
   import { ref } from 'vue'
-  import { getDatabase, ref as dbRef, push } from "firebase/database";
+  import { getDatabase, ref as dbRef, set } from "firebase/database"; 
+  import { getMaxIndexSchedule } from '../../../data/database.js'
   import emailjs from 'emailjs-com';
   import { getEvents } from '../../../data/calendarEvents'
   
@@ -88,8 +89,10 @@
             calendarApi.unselect();
 
             const title = `${this.formData.course} - ${this.formData.firstName} ${this.formData.lastName}`;
+            const eventId = this.createEventId();
+
             calendarApi.addEvent({
-                id: this.createEventId(),
+                id: eventId,
                 title: title,
                 start: arg.startStr,
                 end: arg.endStr,
@@ -115,11 +118,12 @@
                     status: 'PENDING'
                 };
 
-                console.log('Form data to push:', formData);
+                const maxIndexS = await getMaxIndexSchedule();
+                const newId = maxIndexS + 1;
 
                 const db = getDatabase();
-                const scheduleRef = dbRef(db, 'schedule');
-                await push(scheduleRef, formData);
+                const scheduleRef = dbRef(db, 'schedule/' + newId); 
+                set(scheduleRef, formData);
 
                 console.log('Data successfully pushed to Firebase');
 
