@@ -133,25 +133,6 @@ export function retrieveRoomDescription(roomNumber) {
   });
 }
 
-export function getMaxIndexSchedule() {
-  return new Promise((resolve, reject) => {
-    const scheduleRef = ref(db, 'schedule');
-    onValue(scheduleRef, (snapshot) => {
-      const scheduleData = snapshot.val();
-      if (scheduleData) {
-        const indices = Object.keys(scheduleData).map(key => parseInt(key)).filter(index => !isNaN(index));
-        const maxIndex = Math.max(...indices);
-        resolve(maxIndex);
-      } else {
-        resolve(0); // Jeśli nie ma żadnych danych, zwróć 0
-      }
-    }, (error) => {
-      reject(error);
-    });
-  });
-}
-
-
 function isPastDate(dateString) {
   const currentDate = new Date();
   const date = new Date(dateString);
