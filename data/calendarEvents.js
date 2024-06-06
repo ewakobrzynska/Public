@@ -1,7 +1,4 @@
-import { getAllReservations } from "./database";
-
-
-function transformReservations(reservations) {
+export function transformReservations(reservations) {
     const newList = reservations.map(oldObject => {
         return {
             start: oldObject.date + "T" + oldObject.start + ":00.000Z",
@@ -71,21 +68,3 @@ function transformReservations(reservations) {
 
     return newList;
 }
-
-async function loadEvents(roomNumber) {
-    try {
-        const reservations = await getAllReservations();
-        const filteredEvents = reservations.filter(reservations => reservations.roomNumber === roomNumber);
-        const transformedReservations = transformReservations(filteredEvents)
-
-        return transformedReservations
-
-    } catch (error) {
-        console.error("Error loading reservations:", error);
-    }
-}
-
-export async function getEvents(roomNumber) {
-    return await loadEvents(roomNumber); 
-}
-

@@ -65,22 +65,60 @@ export function getAllReservations() {
   })
 }
 
-export function getHistoryReservations() {
+export function getNewReservations() {
   return new Promise((resolve, reject) => {
-    const scheduleRef = ref(db, 'schedule');
+    const scheduleRef = ref(db, 'newreservations');
     onValue(scheduleRef, (snapshot) => {
       const scheduleData = snapshot.val();
-      const filteredData = Object.keys(scheduleData)
-        .filter(key => scheduleData[key].status !== "IMPORTED" && isPastDate(scheduleData[key].date))
-        .reduce((obj, key) => {
-          obj[key] = scheduleData[key];
-          return obj;
-        }, {});
-      resolve(filteredData);
+      resolve(scheduleData);
     }, (error) => {
       reject(error);
     });
   })
+}
+
+export function getNewReservationsLastIndex() {
+  return new Promise((resolve, reject) => {
+    const scheduleRef = ref(db, 'newreservations');
+    onValue(scheduleRef, (snapshot) => {
+      const scheduleData = snapshot.val();
+      if (scheduleData) {
+        const indices = Object.keys(scheduleData).map(index => parseInt(index, 10));
+        const lastIndex = Math.max(...indices);
+        resolve(lastIndex);
+      } else {
+        resolve(null);
+      }
+    }, (error) => {
+      reject(error);
+    });
+  });
+}
+
+export function getHistoryReservations() {
+  return new Promise((resolve, reject) => {
+    const scheduleRef = ref(db, 'newreservations');
+    onValue(scheduleRef, (snapshot) => {
+      const scheduleData = snapshot.val();
+
+      if (!scheduleData) {
+        resolve({});
+        return;
+      }
+
+      const filteredData = Object.keys(scheduleData)
+        .filter(key => !isPastDate(scheduleData[key].date))
+        .reduce((obj, key) => {
+          obj[key] = scheduleData[key];
+          return obj;
+        }, {});
+
+      console.log('Przefiltrowane dane:', filteredData);
+      resolve(filteredData);
+    }, (error) => {
+      reject(error);
+    });
+  });
 }
 
 export function retrieveRoomDescription(roomNumber) {
