@@ -1,88 +1,100 @@
 <template>
-  <div class="demo-app">
-    <header>
-      <h2>Plan zajęć odbywających się w sali {{ $route.params.roomNumber }}</h2>
-      <h3>III Kampus, budynek Wydziału Fizyki, Astronomii i Informatyki Stosowanej (Loj11)</h3>
-    </header>
-    <div>
-      <FullCalendar :options="calendarOptions" ref="calendarRef"/>
+    <div class="demo-app">
+      <header>
+        <h2>Plan zajęć odbywających się w sali {{ $route.params.roomNumber }}</h2>
+        <h3>III Kampus, budynek Wydziału Fizyki, Astronomii i Informatyki Stosowanej (Loj11)</h3>
+      </header>
+      <div>
+        <FullCalendar :options="calendarOptions" ref="calendarRef"/>
+      </div>
+      <DialogModal :childProp="parentState" v-on:changeDialogValue="updateDialogState" v-on:form-submitted="handleSubmition"/>
     </div>
-    <DialogModal :childProp="parentState" v-on:changeDialogValue="updateDialogState" v-on:form-submitted="handleSubmition"/>
-  </div>
-</template>
-
-<script>
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import DialogModal from './DialogModal.vue'
-import { ref } from 'vue'
-import { getDatabase, ref as dbRef, set} from "firebase/database";
-import emailjs from 'emailjs-com';
-import { getAllReservations } from '../../../data/database'
-import { getNewReservations } from '../../../data/database'
-import { getNewReservationsLastIndex } from '../../../data/database'
-import { transformReservations } from '../../../data/calendarEvents'
-
-export default {
-  components: {
-    FullCalendar,
-    DialogModal
-  },
-  data() {
-    return {
-      calendarOptions: {
-        plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        buttonText: {
-          today: 'Dzisiaj',
-          month: 'Miesiąc',
-          day: 'Dzień',
-          week: 'Tydzień',
-        },
-        locale: 'pl',
-        initialView: 'timeGridWeek',
-        weekends: false,
-        selectable: true,
-        nowIndicator: true,
-        slotDuration: "00:15:00",
-        slotLabelInterval: "00:15:00",
-        selectMirror: true,
-        dateClick: this.handleDateClick,
-        select: this.handleDateSelect,
-        eventsSet: this.handleEvents,
-        allDaySlot: false,
-        allDayText: "",
-        expandRows: true,
-        eventOverlap: false,
-        selectOverlap: false,
+  </template>
+  
+  <script>
+  import FullCalendar from '@fullcalendar/vue3'
+  import dayGridPlugin from '@fullcalendar/daygrid'
+  import timeGridPlugin from '@fullcalendar/timegrid'
+  import interactionPlugin from '@fullcalendar/interaction'
+  import DialogModal from './DialogModal.vue'
+  import { ref } from 'vue'
+  import { getDatabase, ref as dbRef, push } from "firebase/database";
+  import emailjs from 'emailjs-com';
+  import { getEvents } from '../../../data/calendarEvents'
+  
+  export default {
+      components: {
+          FullCalendar,
+          DialogModal
       },
-      currentEvents: [],
-      parentState: ref(false),
-      formData: {},
-      tmpArg: {},
-    }
-  },
-  methods: {
-    async performAddEvent(arg) {
-      const calendarApi = this.$refs.calendarRef.getApi();
-      const roomNumber = this.$route.params.roomNumber.toString();
-      calendarApi.unselect();
+      data() {
+          return {
+              calendarOptions: {
+                  plugins: [ dayGridPlugin, interactionPlugin, timeGridPlugin ],
+                  headerToolbar: {
+                      left: 'prev,next today',
+                      center: 'title',
+                      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                  },
+                  buttonText: {
+                      today: 'Dzisiaj',
+                      month: 'Miesiąc',
+                      day: 'Dzień',
+                      week: 'Tydzień',
+                  },
+                  locale: 'pl',
+                  initialView: 'timeGridWeek',
+                  weekends: false,
+                  selectable: true,
+                  nowIndicator: true,
+                  slotDuration: "00:15:00",
+                  slotLabelInterval: "00:15:00",
+                  selectMirror: true,
+                  dateClick: this.handleDateClick,
+                  select: this.handleDateSelect,
+                  eventsSet: this.handleEvents,
+                  allDaySlot: false,
+                  allDayText: "",
+                  expandRows: true,
+                  eventOverlap: false,
+                  selectOverlap: false,
+              },
+              currentEvents: [],
+              parentState: ref(false),
+              formData: {},
+              tmpArg: {}
+          }
+      },
+      methods: {
+          handleDateClick: function(arg) {
+              if (arg.view['type'] == 'dayGridMonth') {
+                  let calendarApi = arg.view.calendar
+                  calendarApi.changeView('timeGridDay', arg.dateStr);
+              }
+          },
+          createEventId() {
+              return "id" + Math.random().toString(16).slice(2)
+          },
+          handleDateSelect(arg) {
+              if (arg.view['type'] == 'dayGridMonth') {
+                  return
+              }
+              this.updateDialogState()
+              this.tmpArg = arg
+          },
+          async performAddEvent(arg) {
+            const calendarApi = this.$refs.calendarRef.getApi();
+            const roomNumber = this.$route.params.roomNumber.toString();
+            calendarApi.unselect();
 
-      const title = `${this.formData.course} - ${this.formData.firstName} ${this.formData.lastName}`;
-      const eventId = this.createEventId();
-      calendarApi.addEvent({
-        id: eventId,
-        title: title,
-        start: arg.startStr,
-        end: arg.endStr,
-        allDay: arg.allDay
-      });
+            const title = `${this.formData.course} - ${this.formData.firstName} ${this.formData.lastName}`;
+            calendarApi.addEvent({
+                id: this.createEventId(),
+                title: title,
+                start: arg.startStr,
+                end: arg.endStr,
+                allDay: arg.allDay
+            });
 
       console.log('Event to add:', {
         id: eventId,
@@ -92,19 +104,22 @@ export default {
         allDay: arg.allDay
       });
 
-      var lastIndex = await getNewReservationsLastIndex();
-      lastIndex += 1;
-      const db = getDatabase();
-      const scheduleRef = dbRef(db, 'newreservations/' + lastIndex );
-      set(scheduleRef, {
-        date: arg.startStr.split('T')[0], 
-        finish: arg.endStr.split('T')[1].substring(0, 5),
-        name: this.formData.course,
-        person: `${this.formData.firstName} ${this.formData.lastName}`,
-        roomNumber: roomNumber,
-        start: arg.startStr.split('T')[1].substring(0, 5),
-        status: 'PENDING'
-      });
+            try {
+                const formData = {
+                    date: arg.startStr.split('T')[0], 
+                    finish: arg.endStr.split('T')[1].substring(0, 5),
+                    name: this.formData.course,
+                    person: `${this.formData.firstName} ${this.formData.lastName}`,
+                    roomNumber: roomNumber,
+                    start: arg.startStr.split('T')[1].substring(0, 5),
+                    status: 'PENDING'
+                };
+
+                console.log('Form data to push:', formData);
+
+                const db = getDatabase();
+                const scheduleRef = dbRef(db, 'schedule');
+                await push(scheduleRef, formData);
 
       console.log('Data successfully pushed to Firebase');
 
