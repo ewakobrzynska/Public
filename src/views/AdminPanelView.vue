@@ -8,13 +8,14 @@ import { myData }  from '../../data/database.js'
 
 export default {
   name: 'AdminPanelView',
-  
   setup(){
     const auth = getAuth();
     const router = useRouter();
     const isLoggedIn = ref(false);
     const description = ref('');
     const roomNumber = ref(null);
+    const importInProgress = ref(false);
+    let lastSyncDate = ref('');
 
     onMounted(() => {
       onAuthStateChanged(auth, (user) => {
@@ -24,7 +25,14 @@ export default {
           isLoggedIn.value = false;
         }
       });
+      fetchLastSyncDate();
     });
+
+    const fetchLastSyncDate = async () => {
+      const res = await fetch('http://localhost:8000/synchronized')
+      const data = await res.json();
+      lastSyncDate.value = data.sync;
+    };
 
     const handleSignOut = () => {
         signOut(auth).then(() => {
@@ -44,12 +52,56 @@ export default {
       roomNumber.value = null;
     };
 
+    const tryImport = async () => {
+      const datePicker = document.getElementById('date-picker');
+      const selectedDate = new Date(datePicker.value);
+      const today = new Date();
+      const lastSync = new Date(lastSyncDate.value);
+      const message = document.getElementById('info-message');
+      message.style.color = 'red';
+      if (selectedDate.toString() === 'Invalid Date') {
+        message.innerHTML = 'Nie wybrano daty!'
+      }
+      else if (selectedDate < today) {
+        message.innerHTML = 'Wybrana data nie może być z przeszłości!'
+      }
+      else if (selectedDate < lastSync) {
+        message.innerHTML = 'Wybrana data nie może być wcześniejsza niż ostatnia data synchronizacji!'
+      }
+      else {
+        importInProgress.value = true;
+        fetch('http://localhost:8000/init-import?until=' + datePicker.value)
+            .then(() => {
+              fetchLastSyncDate();
+              message.style.color = 'black';
+              message.innerHTML = 'Dane zaimportowane pomyślnie';
+              importInProgress.value = false;
+            }).catch(err => {
+              console.error(err);
+              message.style.color = 'red';
+              message.innerHTML = 'Błąd podczas komunikacji z serwerem. Prosimy odświeżyć stronę lub spróbować ponownie później.'
+              importInProgress.value = false;
+            })
+        message.style.color = 'black';
+        message.innerHTML = "Trwa pobieranie danych przez serwer. W zależności od wybranej daty może to potrwać nawet do kilku minut.</br>" +
+            "Pojawi się tu odpowiedni komunikat kiedy import dobiegnie końca.";
+      }
+    };
+
+    const displayFormatSynchronized = () => {
+      const date = lastSyncDate.value.split('-');
+      return date[2] + '.' + date[1] + '.' + date[0];
+    };
+
     return {
       isLoggedIn,
       handleSignOut,
       description,
       roomNumber,
       submitForm,
+      importInProgress,
+      tryImport,
+      displayFormatSynchronized
     }
   },
   created() {   
@@ -100,6 +152,18 @@ export default {
             </router-link>
         </div>
       </div>
+    </div>
+
+    <!-- Import -->
+    <div class="import">
+      <h4>Import stałych rezerwacji sal z systemu USOS</h4>
+      Dane zsychronizowane do dnia: <b>{{displayFormatSynchronized()}}</b><br/><br/>
+      <label for="date-picker">Wybierz datę, do której zaimportować dane:</label><br/><br/>
+      <input id="date-picker" type="date"><br/><br/>
+      <v-btn @click="tryImport" :disabled="importInProgress" class="mx-1 button">Zaimportuj</v-btn>
+      <br/><br/>
+      <b id="info-message"><br/></b>
+      <br/><br/>
     </div>
 
     <!-- Footer -->
@@ -197,6 +261,10 @@ form {
   margin: 5rem 0;
 }
 
+.import {
+  text-align: center;
+}
+
 .overlay {
   position: absolute; 
   bottom: -2rem; 
@@ -220,4 +288,11 @@ form {
   width: 100%;
   height: 100%;
 }
+
+#date-picker {
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px;
+}
+
 </style>
