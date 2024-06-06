@@ -33,6 +33,7 @@ export default {
   async mounted() {
     try {
       this.reservations = await getHistoryReservations();
+      console.error(this.reservations);
     } catch (error) {
       console.error("Error while retrieving data:", error);
     }
