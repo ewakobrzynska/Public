@@ -148,7 +148,11 @@ export default {
       <tbody>
       <tr v-for="(reservation, index) in reservations" 
           :key="index" 
-          :class="{'conflict': reservation.conflict, 'accepted': reservation.status === 'ACCEPTED'}">
+          :class="{'conflict': reservation.conflict,
+           'accepted': reservation.status === 'ACCEPTED',
+           'new': reservation.status === 'PENDING',
+           'conflict-new': reservation.status === 'CONFLICTED'}">
+          
         <td>{{ reservation.id }}</td>
         <td>{{ reservation.date }}</td>
         <td>{{ reservation.start }} - {{ reservation.finish }}</td>
@@ -224,6 +228,18 @@ export default {
 
 .accepted {
   background-color: lightgreen;
+}
+
+.conflict-new {
+  background-color: #FCED8D;
+}
+
+.new {
+  background-color: white;
+}
+
+.conflict-imported {
+  background-color: #E66262;
 }
 
 .reject-button {
