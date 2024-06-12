@@ -42,7 +42,7 @@ const routes = [
   {
     path: '/reservations-history',
     name: 'reservations-history',
-    component: () => import('../views/ReservationsView.vue'),
+    component: () => import('../views/ReservationsHistoryView.vue'),
     meta: {requiresAuth: true},
   },
   {

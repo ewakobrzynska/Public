@@ -2,13 +2,14 @@
 
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {onMounted, ref} from "vue";
-import {myData, getHistoryReservations, retriveUserData} from "../../data/database";
+import {myData, getHistoryReservations, retriveUserData, getAllReservations} from "../../data/database";
 
 export default {
   name: 'ReservationsHistoryView',
   data() {
     return {
-      reservations: []
+      reservations: [],
+      allReservations: []
     }
   },
   setup(){
@@ -33,11 +34,34 @@ export default {
   async mounted() {
     try {
       this.reservations = await getHistoryReservations();
+      this.allReservations = await getAllReservations();
+      this.compareReservations();
       console.error(this.reservations);
     } catch (error) {
       console.error("Error while retrieving data:", error);
     }
   },
+  methods: {
+    compareReservations() {
+      this.reservations.forEach(historyReservation => {
+        this.allReservations.forEach(currentReservation => {
+          if (historyReservation.date === currentReservation.date) {
+            const historyStart = new Date(`1970-01-01T${historyReservation.start}:00`);
+            const historyFinish = new Date(`1970-01-01T${historyReservation.finish}:00`);
+            const currentStart = new Date(`1970-01-01T${currentReservation.start}:00`);
+            const currentFinish = new Date(`1970-01-01T${currentReservation.finish}:00`);
+
+            if (
+              (historyStart < currentFinish && historyFinish > currentStart) ||
+              (currentStart < historyFinish && currentFinish > historyStart)
+            ) {
+              historyReservation.conflict = true;
+            }
+          }
+        });
+      });
+    }
+  }
 }
 
 </script>
@@ -62,7 +86,7 @@ export default {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(reservation, index) in reservations" :key="index">
+      <tr v-for="(reservation, index) in reservations" :key="index" :class="{'conflict': reservation.conflict}">
         <td>{{ reservation.date }}</td>
         <td>{{ reservation.start }} - {{ reservation.finish }}</td>
         <td>{{ reservation.roomNumber }}</td>
@@ -126,5 +150,8 @@ export default {
 
 .reservations-history-table tr:hover {
   background-color: #ddd;
+}
+.conflict {
+  background-color: red;
 }
 </style>
