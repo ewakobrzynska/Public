@@ -88,9 +88,7 @@ export default {
 
         console.log(`Updating reservation ID ${reservationId} to status 'REJECTED'`);
 
-
-        // await updateReservationStatus(reservationId, 'REJECTED');
-
+        await updateReservationStatus(reservationId, 'REJECTED');
 
         this.reservations[index].status = 'REJECTED';
       } catch (error) {
@@ -124,10 +122,7 @@ export default {
 
   }
 }
-
-
 </script>
-
 <template>
   <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
     <div class="container d-flex justify-content-between">
@@ -151,7 +146,9 @@ export default {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(reservation, index) in reservations" :key="index" :class="{'conflict': reservation.conflict}">
+      <tr v-for="(reservation, index) in reservations" 
+          :key="index" 
+          :class="{'conflict': reservation.conflict, 'accepted': reservation.status === 'ACCEPTED'}">
         <td>{{ reservation.id }}</td>
         <td>{{ reservation.date }}</td>
         <td>{{ reservation.start }} - {{ reservation.finish }}</td>
@@ -186,8 +183,10 @@ export default {
   </footer>
 </template>
 
+
 <style scoped>
 @import '@/css/bootstrap.min.css';
+
 .header-container {
   position: relative;
   background-color: #c5c5c5;
@@ -215,16 +214,16 @@ export default {
   text-align: left;
 }
 
-.reservations-history-table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
 .reservations-history-table tr:hover {
   background-color: #ddd;
 }
 
 .conflict {
   background-color: red;
+}
+
+.accepted {
+  background-color: lightgreen;
 }
 
 .reject-button {
@@ -236,58 +235,3 @@ button:disabled {
   cursor: not-allowed;
 }
 </style>
-
-
-<style scoped>
-@import '@/css/bootstrap.min.css';
-.header-container {
-  position: relative;
-  background-color: #c5c5c5;
-  height: 80px;
-  width: 100%;
-}
-
-.table-container {
-  margin: 40px 40px 40px 40px;
-}
-
-.reservations-history-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.reservations-history-table th,
-.reservations-history-table td {
-  padding: 8px;
-  border: 1px solid #ddd;
-}
-
-.reservations-history-table th {
-  background-color: #f2f2f2;
-  text-align: left;
-}
-
-.reservations-history-table tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.reservations-history-table tr:hover {
-  background-color: #ddd;
-}
-
-.conflict {
-  background-color: red;
-}
-
-.reject-button {
-  color: red;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-</style>
-
-
-
