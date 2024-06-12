@@ -60,6 +60,9 @@ export default {
           }
         });
       });
+    },
+    rejectReservation() {
+      //TODO
     }
   }
 }
@@ -83,6 +86,7 @@ export default {
         <th>Numer sali</th>
         <th>Nazwa rezerwacji</th>
         <th>Osoba rezerwująca</th>
+        <th>Akcje</th>
       </tr>
       </thead>
       <tbody>
@@ -92,6 +96,9 @@ export default {
         <td>{{ reservation.roomNumber }}</td>
         <td>{{ reservation.name }}</td>
         <td>{{ reservation.person }}</td>
+        <td v-if="reservation.conflict">
+          <button class="reject-button" @click="rejectReservation(index)">Odrzuć rezerwację</button>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -153,5 +160,8 @@ export default {
 }
 .conflict {
   background-color: red;
+}
+.reject-button {
+  color: red;
 }
 </style>
