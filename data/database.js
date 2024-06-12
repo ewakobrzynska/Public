@@ -1,10 +1,12 @@
 import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import roomsFile from "./rooms.json";
 import detailsFile from "./details.json";
 import scheduleFile from "./schedule.json";
 
 const db = getDatabase();
 
+// Importowanie danych z plików JSON (zakładając, że roomsFile, detailsFile, scheduleFile są zdefiniowane)
 function importDataFromFiles() {
   set(ref(db, 'rooms'), roomsFile);
   set(ref(db, 'details'), detailsFile);
@@ -34,11 +36,9 @@ export function retriveUserData(userId){
 }
 
 export function myData(data){
-    return data;
+  return data;
 }
 
-
-//Przykladowa funkcja do uzyskania sali o indeksie 11
 export function retrieveRoomData(roomIndex) {
   return new Promise((resolve, reject) => {
     const roomRef = ref(db, `details/${roomIndex}`);
@@ -51,8 +51,6 @@ export function retrieveRoomData(roomIndex) {
   });
 }
 
-//retrieveRoomData(11);
-
 export function getAllReservations() {
   return new Promise((resolve, reject) => {
     const scheduleRef = ref(db, 'schedule');
@@ -62,7 +60,7 @@ export function getAllReservations() {
     }, (error) => {
       reject(error);
     });
-  })
+  });
 }
 
 export function getNewReservations() {
@@ -74,7 +72,7 @@ export function getNewReservations() {
     }, (error) => {
       reject(error);
     });
-  })
+  });
 }
 
 export function getNewReservationsLastIndex() {
@@ -107,11 +105,11 @@ export function getHistoryReservations() {
       }
 
       const filteredData = Object.keys(scheduleData)
-        .filter(key => !isPastDate(scheduleData[key].date))
-        .reduce((obj, key) => {
-          obj[key] = scheduleData[key];
-          return obj;
-        }, {});
+          .filter(key => !isPastDate(scheduleData[key].date))
+          .reduce((obj, key) => {
+            obj[key] = scheduleData[key];
+            return obj;
+          }, {});
 
       console.log('Przefiltrowane dane:', filteredData);
       resolve(filteredData);
@@ -131,6 +129,36 @@ export function retrieveRoomDescription(roomNumber) {
       reject(error);
     });
   });
+}
+
+export async function updateReservationStatus(reservationId, status) {
+  try {
+    const db = getFirestore();
+    const reservationRef = doc(db, "reservations", reservationId.toString());
+    await updateDoc(reservationRef, {
+      status: status
+    });
+  } catch (error) {
+    console.error("Error while updating reservation status:", error);
+    throw error;
+  }
+}
+
+
+
+export async function addReservation(reservation) {
+  try {
+    const lastIndex = await getNewReservationsLastIndex();
+    const newIndex = lastIndex !== null ? lastIndex + 1 : 0;
+    await set(ref(db, `newreservations/${newIndex}`), {
+      ...reservation,
+      id: newIndex
+    });
+    console.log("Reservation added successfully");
+  } catch (error) {
+    console.error("Error while adding reservation:", error);
+    throw error;
+  }
 }
 
 function isPastDate(dateString) {

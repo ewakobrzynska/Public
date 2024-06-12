@@ -97,7 +97,8 @@ export default {
       const db = getDatabase();
       const scheduleRef = dbRef(db, 'newreservations/' + lastIndex );
       set(scheduleRef, {
-        date: arg.startStr.split('T')[0], 
+        id: lastIndex,
+        date: arg.startStr.split('T')[0],
         finish: arg.endStr.split('T')[1].substring(0, 5),
         name: this.formData.course,
         person: `${this.formData.firstName} ${this.formData.lastName}`,
@@ -187,7 +188,7 @@ export default {
 </script>
 
 
-  
+
   <style lang='css'>
   header {
       padding-bottom: 4rem;
@@ -220,4 +221,3 @@ export default {
       margin: 0 auto;
   }
   </style>
-  
