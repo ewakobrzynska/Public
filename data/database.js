@@ -1,5 +1,4 @@
-import { getDatabase, ref, set, onValue } from "firebase/database";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { getDatabase, ref, set, onValue, update } from "firebase/database";
 import roomsFile from "./rooms.json";
 import detailsFile from "./details.json";
 import scheduleFile from "./schedule.json";
@@ -132,19 +131,15 @@ export function retrieveRoomDescription(roomNumber) {
 }
 
 export async function updateReservationStatus(reservationId, status) {
-  try {
-    const db = getFirestore();
-    const reservationRef = doc(db, "reservations", reservationId.toString());
-    await updateDoc(reservationRef, {
-      status: status
+  const reservationRef = ref(db, `newreservations/${reservationId}`);
+  update(reservationRef, { status: status })
+    .then(() => {
+      console.log('Status updated successfully');
+    })
+    .catch(error => {
+      console.error('Error updating status:', error);
     });
-  } catch (error) {
-    console.error("Error while updating reservation status:", error);
-    throw error;
-  }
 }
-
-
 
 export async function addReservation(reservation) {
   try {

@@ -1,7 +1,13 @@
 <script>
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { onMounted, ref } from "vue";
-import { myData, getHistoryReservations, retriveUserData, getAllReservations } from "../../data/database";
+import {
+  myData,
+  getHistoryReservations,
+  retriveUserData,
+  getAllReservations,
+  updateReservationStatus
+} from "../../data/database";
 
 export default {
   name: 'ReservationsHistoryView',
@@ -92,8 +98,6 @@ export default {
       }
     },
 
-
-
     async acceptReservation(index) {
       try {
         const reservation = this.reservations[index];
@@ -110,15 +114,13 @@ export default {
 
         console.log(`Updating reservation ID ${reservationId} to status 'ACCEPTED'`);
 
-        // await updateReservationStatus(reservationId, 'ACCEPTED');
+        await updateReservationStatus(reservationId, 'ACCEPTED');
 
         this.reservations[index].status = 'ACCEPTED';
       } catch (error) {
         console.error("Error while accepting reservation:", error);
       }
     },
-
-
 
   }
 }
