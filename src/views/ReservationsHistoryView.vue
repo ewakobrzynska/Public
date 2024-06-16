@@ -231,7 +231,7 @@ export default {
 }
 
 .conflict-new {
-  background-color: #FCED8D;
+  background-color: #E66262;
 }
 
 .new {
@@ -239,6 +239,10 @@ export default {
 }
 
 .conflict-imported {
+  background-color: #E66262;
+}
+
+.conflict{
   background-color: #E66262;
 }
 
