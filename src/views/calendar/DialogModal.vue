@@ -11,6 +11,9 @@
               <v-text-field label="Nazwisko*" v-model="lastName" required></v-text-field>
             </v-col>
             <v-col cols="12" sm="12">
+              <v-text-field label="E-mail*" v-model="email" required></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12">
               <v-text-field hint="rezerwacja będzie nosić nazwę podaną w tym polu" label="Prowadzony kurs*" v-model="course" required></v-text-field>
             </v-col>
           </v-row>
@@ -44,10 +47,11 @@ watch(() => props.childProp, (newValue) => {
 
 const firstName = ref('');
 const lastName = ref('');
+const email = ref('');
 const course = ref('');
 
 const submitForm = () => {
-  if (!firstName.value || !lastName.value || !course.value) {
+  if (!firstName.value || !lastName.value || !email.value || !course.value) {
     alert("Wypełnij wszystkie pola.");
     return; 
   }
@@ -55,6 +59,7 @@ const submitForm = () => {
   const formData = {
     firstName: firstName.value,
     lastName: lastName.value,
+    email: email.value,
     course: course.value,
   };
 

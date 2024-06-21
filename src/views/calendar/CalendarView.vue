@@ -114,6 +114,7 @@ export default {
       const emailParams = {
         firstName: this.formData.firstName,
         lastName: this.formData.lastName,
+        email: this.formData.email,
         course: this.formData.course,
         timestamp: formattedDate
       };
