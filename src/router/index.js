@@ -23,12 +23,6 @@ const routes = [
     component: () => import('../views/AdminPanelView.vue'),
     meta: {requiresAuth: true},
   },
-
-  {
-    path: '/reservations',
-    name: 'reservations',
-    component: () => import('../views/ReservationsView.vue'),
-  },
   {
     path: '/classroom',
     name: 'classroom',
