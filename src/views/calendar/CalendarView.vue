@@ -125,6 +125,8 @@ export default {
         .catch((error) => {
           console.error('Błąd przy wysyłaniu e-maila:', error);
         });
+      
+      this.forceRerender();
     },
     handleDateClick(arg) {
       if (arg.view.type === 'dayGridMonth') {
@@ -153,17 +155,32 @@ export default {
       this.updateDialogState();
       this.performAddEvent(this.tmpArg);
     },
+    forceRerender() {
+      this.$forceUpdate();
+    },
     loadEvents(events) {
       const calendarApi = this.$refs.calendarRef.getApi();
       events.forEach(event => {
         const title = `${event.title} - ${event.person}`;
-        calendarApi.addEvent({
-          id: event.id,
-          title: title,
-          start: event.startStr,
-          end: event.endStr,
-          allDay: event.allDay
-        });
+
+        if (event.status === 'PENDING') {
+            calendarApi.addEvent({
+            id: event.id,
+            title: 'Rezerwacja oczekująca na zatwierdzenie',
+            start: event.startStr,
+            end: event.endStr,
+            allDay: event.allDay,
+            backgroundColor: 'green'
+          });
+        } else {
+          calendarApi.addEvent({
+            id: event.id,
+            title: title,
+            start: event.startStr,
+            end: event.endStr,
+            allDay: event.allDay,
+          });
+        }
       });
     }
   },
@@ -175,7 +192,9 @@ export default {
       const allReservations = [...reservations, ...newReservations];
       const filteredEvents = allReservations.filter(reservation => reservation.roomNumber === roomNumber);
       const events = transformReservations(filteredEvents);
-      console.log(reservations)
+
+      console.log(events)
+
       if (events && events.length > 0) {
         this.loadEvents(events);
       } else {

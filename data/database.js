@@ -1,4 +1,4 @@
-import { getDatabase, ref, set, onValue, update } from "firebase/database";
+import { getDatabase, ref, set, onValue, update, push } from "firebase/database";
 import roomsFile from "./rooms.json";
 import detailsFile from "./details.json";
 import scheduleFile from "./schedule.json";
@@ -160,4 +160,44 @@ function isPastDate(dateString) {
   const currentDate = new Date();
   const date = new Date(dateString);
   return date < currentDate;
+}
+
+export function reportIssue(roomNumber, userEmail, description) {
+  const issuesRef = ref(db, 'issues')
+
+  const report = {
+    roomNumber: roomNumber,
+    userEmail: userEmail,
+    description: description,
+    data: getCurrentDate()
+  };
+
+  push(issuesRef, report)
+    .then(() => {
+        console.log("Report sent succesfully.");
+        return 1
+    })
+    .catch((error) => {
+        console.error("Error while sending a report: ", error);
+        return 0
+    });
+}
+
+function getCurrentDate() {
+  const currentDate = new Date();
+  return currentDate.toISOString().slice(0, 10);
+}
+
+export function retrieveIssues() {
+  return new Promise((resolve, reject) => {
+    const issuesRef = ref(db, 'issues')
+
+    onValue(issuesRef, (snapshot) => {
+      const data = snapshot.val();
+      resolve(data);
+    }, (error) => {
+      reject(error);
+    });
+
+  })
 }

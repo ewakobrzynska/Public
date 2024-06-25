@@ -7,6 +7,7 @@ export function transformReservations(reservations) {
             endStr: oldObject.date + "T" + oldObject.finish + ":00+02:00",
             title: oldObject.name,
             person: oldObject.person,
+            status: oldObject.status,
             allDay: false,
             jsEvent: {
                 isTrusted: true

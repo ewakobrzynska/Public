@@ -152,6 +152,14 @@ export default {
             </router-link>
         </div>
       </div>
+      <div class="column">
+        <img src="https://cdn-icons-png.freepik.com/512/6358/6358241.png?ga=GA1.1.1269388866.1713970914" style="width:100%" class="small-image">
+        <div class="overlay">
+          <router-link to="reportedIssues" class="pa-0 ma-0">
+                <v-btn>Zgłoszone problemy</v-btn>
+            </router-link>
+        </div>
+      </div>
     </div>
 
     <!-- Import -->
@@ -293,6 +301,11 @@ form {
   border: 1px solid #000;
   border-radius: 5px;
   padding: 10px;
+}
+
+.small-image {
+  padding: 4rem;
+
 }
 
 </style>

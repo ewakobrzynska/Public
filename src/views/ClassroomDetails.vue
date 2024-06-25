@@ -1,5 +1,6 @@
 <template>
-<div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
+  <div>
+  <div class="d-flex justify-content-between align-items-center py-4 bg-light border-bottom mb-4">
         <div class="container d-flex justify-content-between">
           <h1 v-if="isHomePage">System Rezerwacji</h1>
           <h1 v-else>Katalog sal - szczegóły</h1>
@@ -62,21 +63,29 @@
           style="bottom: 0;"
         >
           <v-card-text >
-            <h1>Masz jakiś problem?</h1>
-
+            <h2>Masz problem?</h2>
             <span>Opisz swój problem, a my zajmiemy się nim natychmiast.</span>
-    
           </v-card-text>
 
           <v-container fluid>
             <v-textarea
-            label="Opis problemu"
-            name="input-7-1"
-            variant="outlined"
-            rows="6"
-            auto-grow
+              label="Twój e-mail"
+              name="input-5-1"
+              variant="outlined"
+              rows="1"
+              auto-grow
+              v-model="userEmail"
             ></v-textarea>
-        </v-container>
+
+            <v-textarea
+              label="Opis problemu"
+              name="input-7-1"
+              variant="outlined"
+              rows="6"
+              auto-grow
+              v-model="problemDescription"
+            ></v-textarea>
+          </v-container>
   
           <v-card-actions class="form-actions">
 
@@ -86,8 +95,8 @@
                     text="Wyślij"
                     variant="text"
                     color="teal-accent-4"
+                    @click="submitReport"
                 ></v-btn>
-                
                 <v-btn
                     prepend-icon="mdi-cancel"
                     color="red-accent-3"
@@ -95,7 +104,7 @@
                     variant="text"
                     @click="reveal = false"
                 ></v-btn>
-            </div>
+              </div>
           </v-card-actions>
         </v-card>
       </v-expand-transition>
@@ -118,22 +127,40 @@
         </div>
       </div>
     </footer>
+    </div>
   </template>
   
   <script>
-    import { retrieveRoomData, retrieveRoomDescription } from "../../data/database.js";
+    import { retrieveRoomData, retrieveRoomDescription, reportIssue } from "../../data/database.js";
 
     export default {
       data: () => ({
         roomDetails: {},
         roomDescription: '',
         reveal: false,
+        userEmail: '',
+        problemDescription: ''
       }),
 
       methods: {
         goToCalendar() {
           console.log(this.roomDetails.roomNumber);
           this.$router.push({ path: `/calendar/${this.roomDetails.roomNumber}` });
+        },
+
+        submitReport() {
+          const roomNumber = this.roomDetails.roomNumber; 
+          
+          try {
+            reportIssue(roomNumber, this.userEmail, this.problemDescription)
+            alert('Wysłano, dziękujemy za zgłoszenie problemu.')
+          } catch (error) {
+            alert('Wystąpił problem z wysłaniem zgłoszenia, spróbuj ponownie.')
+            console.error("Błąd przy wysłaniu zgłoszenia: ", error)
+          }
+
+          // console.log(this.problemDescription);
+          this.reveal = false;
         },
 
         goBack() {
