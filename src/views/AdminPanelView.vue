@@ -145,14 +145,6 @@ export default {
         </div>
       </div>
       <div class="column">
-        <img src="https://t3.ftcdn.net/jpg/04/57/16/48/360_F_457164865_FPfUR4Hi6RuNPa6sqITpYgkWQMw5pPv4.jpg" style="width:100%" class="image">
-        <div class="overlay">
-          <router-link to="" class="pa-0 ma-0">
-                <v-btn>Dane i konflikty</v-btn>
-            </router-link>
-        </div>
-      </div>
-      <div class="column">
         <img src="https://cdn-icons-png.freepik.com/512/6358/6358241.png?ga=GA1.1.1269388866.1713970914" style="width:100%" class="small-image">
         <div class="overlay">
           <router-link to="reportedIssues" class="pa-0 ma-0">

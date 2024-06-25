@@ -41,7 +41,6 @@ export default {
       let reservations = await getHistoryReservations();
       let allReservations = await getAllReservations();
 
-      // Convert reservations object to array if it's not already an array
       this.reservations = Array.isArray(reservations) ? reservations : Object.values(reservations);
       this.allReservations = Array.isArray(allReservations) ? allReservations : Object.values(allReservations);
 
