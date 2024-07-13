@@ -103,15 +103,8 @@ export function getHistoryReservations() {
         return;
       }
 
-      const filteredData = Object.keys(scheduleData)
-          .filter(key => !isPastDate(scheduleData[key].date))
-          .reduce((obj, key) => {
-            obj[key] = scheduleData[key];
-            return obj;
-          }, {});
-
-      console.log('Przefiltrowane dane:', filteredData);
-      resolve(filteredData);
+      console.log('Pobrane dane:', scheduleData);
+      resolve(scheduleData);
     }, (error) => {
       reject(error);
     });
@@ -154,12 +147,6 @@ export async function addReservation(reservation) {
     console.error("Error while adding reservation:", error);
     throw error;
   }
-}
-
-function isPastDate(dateString) {
-  const currentDate = new Date();
-  const date = new Date(dateString);
-  return date < currentDate;
 }
 
 export function reportIssue(roomNumber, userEmail, description) {
